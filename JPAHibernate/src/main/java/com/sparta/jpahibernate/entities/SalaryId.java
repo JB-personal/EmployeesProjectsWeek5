@@ -34,6 +34,14 @@ public class SalaryId implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "SalaryId{" +
+                "empNo=" + empNo +
+                ", fromDate=" + fromDate +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;

@@ -33,7 +33,7 @@ public class EmployeeRepositoryDao {
 
         System.out.println( start.getClass() );
 
-       // int res = employeeRepository.countNumberOfEmployeesLeftDepartmentByYear2(department, start, end);
+        // int res = employeeRepository.countNumberOfEmployeesLeftDepartmentByYear2(department, start, end);
 
         return 0;
     }

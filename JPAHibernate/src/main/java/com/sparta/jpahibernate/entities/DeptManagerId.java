@@ -33,6 +33,14 @@ public class DeptManagerId implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "DeptManagerId{" +
+                "empNo=" + empNo +
+                ", deptNo='" + deptNo + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
