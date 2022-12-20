@@ -1,6 +1,5 @@
 package com.sparta.jpahibernate.repositories;
 
-
 import com.sparta.jpahibernate.entities.Employee;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,10 +31,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "AND departments.dept_name = :department " +
             "AND dept_emp.to_date " +
             "BETWEEN :year'-01-01' AND :year'-12-31'", nativeQuery = true )
-   // public int countNumberOfEmployeesLeftDepartmentByYear(@Param("department") String department, @Param("yearStart") LocalDate yearStart, @Param("yearEnd") LocalDate yearEnd);
+    // public int countNumberOfEmployeesLeftDepartmentByYear(@Param("department") String department, @Param("yearStart") LocalDate yearStart, @Param("yearEnd") LocalDate yearEnd);
     public int countNumberOfEmployeesLeftDepartmentByYear(@Param("department") String department, @Param("year") String year);
 
-// TEMP ================================================================
+    // TEMP ================================================================
     @Query(value = "SELECT count(*) FROM employees.employees " +
             "JOIN dept_emp, departments " +
             "WHERE employees.emp_no = dept_emp.emp_no " +

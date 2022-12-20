@@ -1,29 +1,42 @@
 package com.sparta.jpahibernate;
 
+import com.sparta.jpahibernate.repositories.DepartmentRepository;
+import com.sparta.jpahibernate.repositories.DeptEmpRepository;
+import com.sparta.jpahibernate.repositories.SalaryRepository;
+import com.sparta.jpahibernate.repositories.TitleRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.EmployeeRepository;
 import com.sparta.jpahibernate.repositories.EmployeeRepositoryDao;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Transactional
 class JpaHibernateApplicationTests {
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    DeptEmpRepository deptEmpRepo;
+    @Autowired
+    DepartmentRepository deptRepo;
+
+    @Autowired
+    SalaryRepository salaryRepo;
+
+    @Autowired
+    TitleRepository titleRepo;
+
     @Test
     void contextLoads() {
-
     }
 
     @Test
@@ -122,5 +135,37 @@ class JpaHibernateApplicationTests {
         Assertions.assertTrue( res == 11224);
     }
 
+    @Test
+    void findNoEmployeesForEachDepartment(){
+        List<String> list1 = deptEmpRepo.findDeptName();
+        List<Integer> list2 = deptEmpRepo.findNoOfEmployeesForEachDept(
+                LocalDate.of(1995,1,1),
+                LocalDate.of(2005,1,1)
+        );
+        for (int i = 0; i < list1.size(); i++){
+            System.out.println(list1.get(i) + " department has " + list2.get(i) + " employees.");
+        }
+    }
+
+    @Test
+    void test3(){
+        List<String> list1 = titleRepo.findAllTitles();
+        String male = "M";
+        String female = "F";
+        List<Double> males = salaryRepo.findAvgSalary(male);
+        List<Double> females = salaryRepo.findAvgSalary(female);
+        for (int i = 0; i < list1.size(); i++) {
+            if (males.get(i) < females.get(i)) {
+                System.out.print("The pay gap for " + list1.get(i) + " is higher for females by ");
+                System.out.printf("%.2f", (1-(males.get(i) / females.get(i))));
+                System.out.println();
+            }
+            if (males.get(i) > females.get(i)) {
+                System.out.print("The pay gap for " + list1.get(i) + " is higher for males by ");
+                System.out.printf("%.2f", (1-(females.get(i) / males.get(i))));
+                System.out.println();
+            }
+        }
+    }
 
 }
