@@ -1,8 +1,9 @@
 package com.sparta.jpahibernate;
 
-import com.sparta.jpahibernate.dao.concretes.DepartmentDAO;
-import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.SalaryDTO;
+import com.sparta.jpahibernate.dao.concretes.*;
+import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
+import com.sparta.jpahibernate.dto.SalaryForTitlesDTO;
+import com.sparta.jpahibernate.entities.Department;
 import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.*;
 import jakarta.transaction.Transactional;
@@ -19,7 +20,7 @@ import java.util.List;
 class JpaHibernateApplicationTests {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeDAO empDao;
 
     @Autowired
     private DepartmentDAO deptDao;
@@ -38,11 +39,9 @@ class JpaHibernateApplicationTests {
     @Test
     void findEmployeeByLastName() {
 
-        List<Employee> res = employeeRepository.findByLastName("Simmel");
+        List<Employee> res = empDao.findByLastName("Simmel");
         System.out.println(res);
         Assertions.assertTrue(res.size() >= 1);
-
-
     }
 
     @Test
@@ -54,7 +53,7 @@ class JpaHibernateApplicationTests {
         String department = "Sales";
         //LocalDate fromDate = "1990-10-10";
         //String toDate = "2020-10-10";
-        List<Employee> res = employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
+        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
         Assertions.assertTrue(res.size() == 8830);
     }
@@ -66,7 +65,7 @@ class JpaHibernateApplicationTests {
         LocalDate toDate = LocalDate.of(2020,10,10);
 
         String department = "Sales";
-        List<Employee> res = employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
+        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
         Assertions.assertTrue(res.size() == 269);
     }
@@ -77,7 +76,7 @@ class JpaHibernateApplicationTests {
         LocalDate toDate = LocalDate.of(2020,10,10);
 
         String department = "Development";
-        List<Employee> res = employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
+        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
         Assertions.assertTrue(res.size() == 2513);
     }
@@ -91,7 +90,7 @@ class JpaHibernateApplicationTests {
         String department = "Sales";
         //LocalDate fromDate = "1990-10-10";
         //String toDate = "2020-10-10";
-        List<Employee> res = employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
+        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
         Assertions.assertTrue( res.isEmpty() );
         //Assertions.assertTrue();
@@ -107,7 +106,7 @@ class JpaHibernateApplicationTests {
         String department = "Snakes";
 
 
-        List<Employee> res = employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
+        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
 
         Assertions.assertTrue( res == null );
@@ -118,7 +117,7 @@ class JpaHibernateApplicationTests {
     void countNumberOfEmployeesThatLeftADepartmentByYear(){
         String year = "2000";
         String department = "Sales";
-        int res = employeeRepository.countNumberOfEmployeesLeftDepartmentByYear(department, year);
+        int res = empDao.countNumberOfEmployeesLeftDepartmentByYear(department, year);
         System.out.println(res);
         Assertions.assertTrue(res == 11224);
 
@@ -134,9 +133,8 @@ class JpaHibernateApplicationTests {
     void findEmployeesByDepartmentByDateYearRange(){
         List<EmpsForDeptsDTO> testlist = deptDao.findNoOfEmployeesForEachDept(
                 LocalDate.of(1995,1,1),
-                LocalDate.of(2005,1,1)
+                LocalDate.of(2005,12,31)
         );
-
         System.out.println(testlist);
     }
 

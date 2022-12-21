@@ -1,11 +1,12 @@
 package com.sparta.jpahibernate.dao.concretes;
 
 import com.sparta.jpahibernate.dao.interfaces.IDepartment;
-import com.sparta.jpahibernate.dto.DepartmentDTO;
+import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
 import com.sparta.jpahibernate.entities.Department;
-import com.sparta.jpahibernate.repositories.DepartmentRepository;
+import com.sparta.jpahibernate.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
@@ -51,5 +52,15 @@ public class DepartmentDAO implements IDepartment {
     @Override
     public List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate) {
         return departmentRepository.findNoOfEmployeesForEachDept(fromDate, toDate);
+    }
+
+    @Override
+    public Department getDepartmentById(String id) {
+        Optional<Department> department = departmentRepository.findById(id);
+        if(department.isPresent()) {
+            Department found = department.get();
+            return found;
+        }
+        return null;
     }
 }
