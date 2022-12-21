@@ -22,4 +22,27 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
         // get salary from employee id
 //    int getSalaryFromEmployeeId(int id);
 
+    @Query(
+            value = "SELECT avg(salaries.salary) FROM employees JOIN salaries, departments, dept_emp WHERE " +
+                    "employees.emp_no = dept_emp.emp_no AND dept_emp.emp_no = salaries.emp_no AND dept_name = " +
+                    ":department AND salaries.from_date > :year'-01-01' AND salaries.to_date < :yearEnd'-01-01'",
+            nativeQuery = true )
+    List<Double> findAverageSalaryByDepartmentAndGivenDate(@Param("department") String department, @Param("year")
+    String year, @Param("yearEnd") String yearEnd);
+
+    @Query(
+            value = "SELECT min(salaries.salary) FROM employees JOIN titles, salaries WHERE " +
+                    "employees.emp_no = salaries.emp_no AND employees.emp_no = titles.emp_no AND titles.title = :title AND titles.from_date " +
+                    "BETWEEN :year'-01-01' AND :yearEnd'-01-01'",
+            nativeQuery = true )
+    List<Double> findSalaryByTitleWithinGivenYearMin(@Param("title") String department, @Param("year")
+    String year, @Param("yearEnd") String yearEnd);
+
+    @Query(
+            value = "SELECT max(salaries.salary) FROM employees JOIN titles, salaries WHERE " +
+                    "employees.emp_no = salaries.emp_no AND employees.emp_no = titles.emp_no AND titles.title = :title AND titles.from_date " +
+                    "BETWEEN :year'-01-01' AND :yearEnd'-01-01'",
+            nativeQuery = true )
+    List<Double> findSalaryByTitleWithinGivenYearMax(@Param("title") String department, @Param("year")
+    String year, @Param("yearEnd") String yearEnd);
 }
