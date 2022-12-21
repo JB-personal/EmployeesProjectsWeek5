@@ -1,5 +1,7 @@
 package com.sparta.jpahibernate;
 
+import com.sparta.jpahibernate.dto.DeptEmpDTO;
+import com.sparta.jpahibernate.dto.SalaryDTO;
 import com.sparta.jpahibernate.repositories.DepartmentRepository;
 import com.sparta.jpahibernate.repositories.DeptEmpRepository;
 import com.sparta.jpahibernate.repositories.SalaryRepository;
@@ -16,7 +18,6 @@ import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 @SpringBootTest
 @Transactional
@@ -170,4 +171,20 @@ class JpaHibernateApplicationTests {
         }
     }
 
+    @Test
+    void test4(){
+        List<DeptEmpDTO> testlist = deptRepo.list(
+                LocalDate.of(1995,1,1),
+                LocalDate.of(2005,1,1)
+        );
+        System.out.println(testlist);
+    }
+
+    @Test
+    void test5(){
+        List<SalaryDTO> maleSalary = salaryRepo.list("M");
+        List<SalaryDTO> femaleSalary = salaryRepo.list("F");
+        System.out.println(maleSalary);
+        System.out.println(femaleSalary);
+    }
 }
