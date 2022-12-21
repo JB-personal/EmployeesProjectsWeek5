@@ -43,5 +43,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "BETWEEN :sYear" + " AND :eYear", nativeQuery = true )
     // public int countNumberOfEmployeesLeftDepartmentByYear(@Param("department") String department, @Param("yearStart") LocalDate yearStart, @Param("yearEnd") LocalDate yearEnd);
     public int countNumberOfEmployeesLeftDepartmentByYear2(@Param("department") String department, @Param("sYear") LocalDate sYear, @Param("eYear") LocalDate eYear);
-
 }

@@ -14,4 +14,7 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
                     "GROUP BY T.title ORDER BY T.title", nativeQuery = true
     )
     List<Double> findAvgSalary(String gender);
+    
+        // get salary from employee id
+    int getSalaryFromEmployeeId(int id);
 }

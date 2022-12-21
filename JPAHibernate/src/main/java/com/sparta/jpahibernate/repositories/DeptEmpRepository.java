@@ -21,5 +21,5 @@ public interface DeptEmpRepository extends JpaRepository<DeptEmp, DeptEmpId> {
             nativeQuery = true
     )
     List<Integer> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate);
-
+    List<DeptEmpId> findByDeptNo(String deptNo);
 }
