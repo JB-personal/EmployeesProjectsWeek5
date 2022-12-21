@@ -27,6 +27,6 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
     List<SalaryDTO> list(@Param("gender") String gender);
     
         // get salary from employee id
-    int getSalaryFromEmployeeId(int id);
+//    int getSalaryFromEmployeeId(int id);
 
 }
