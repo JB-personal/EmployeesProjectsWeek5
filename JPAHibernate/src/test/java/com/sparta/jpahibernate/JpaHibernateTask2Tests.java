@@ -38,55 +38,39 @@ class JpaHibernateTask2Tests {
 
     // What is the average salary for a named department on a given date?
     @Test
-    void averageSalaryForDept(){
-        double average = 0;
+    void averageSalaryForDeptOnGivenDate(){
 
-        // get department by name
-        Department result = departmentRepository.findByDeptName("Finance");
-        // use the department id that corresponds to the name
-        String id = result.getId();
-        // get all employee ids in department
-        List<DeptEmpId> deptEmpId = deptEmpRepository.findByDeptNo(id);
-        // create empty array list to add employee salaries in department
-        ArrayList<Integer> salaries = new ArrayList<>();
-        for(DeptEmpId object : deptEmpId){
-            Integer i = object.getEmpNo();
-            int salaryFromId = salaryRepository.getSalaryFromEmployeeId(i);
-            salaries.add(salaryFromId);
-        }
-        for(int i: salaries){
-            average += i;
-        }
-        average /= salaries.size();
-
-        Assertions.assertEquals(6935.62, average); // placeholder double. put in actual salary average and test
-        // TODO: ask Niel about this
-        // TODO: check the average of the whole finance department in sql to ensure we have a correct assertion
-
-
-        // TODO: add logic for a given date
-        //  figure way to test salary average - currently looking at querying DB. Need a working query:
-        //  SELECT * FROM employees.dept_emp INNER JOIN Salaries ON Salaries.emp_no=dept_emp.emp_no WHERE dept_emp.dept_no = "d002";
-
+        String year = "2000";
+        String yearEnd = "2001";
+        String department = "Finance";
+        List<Double> averageSalaryForGivenDate = salaryRepository.findAverageSalaryByDepartmentAndGivenDate(department,
+                year, yearEnd);
+        System.out.println(averageSalaryForGivenDate);
+        Assertions.assertEquals(63779.2199, salaryRepository.findAverageSalaryByDepartmentAndGivenDate(department, year,
+                yearEnd).get(0));
 
     }
     // Given a job title name, what is the range of salary values within a given year?
 
     @Test
     void givenJobTitleFindSalaryRangeWithinGivenYear(){
-        //LocalDate fromDate = LocalDate.of(2019,10,10);
-        //LocalDate toDate = LocalDate.of(2020,10,10);
-        // get title by ID
-        // get all employees with that ID
-        // check to see that it fits the time frame
-        // get salaries of those employees
-        // get put into list collection
-        // find the lowest of the range and the highest of the range
-        // maybe use a query to find the employees
-        // use java for the find lowest and highest
 
+        String title = "Staff";
+        String year = "2000";
+        String yearEnd = "2001";
 
+        List<Double> salaryRange = new ArrayList<>();
+        salaryRange.add(salaryRepository.findSalaryByTitleWithinGivenYearMin( title, year, yearEnd).get(0));
+        salaryRange.add(salaryRepository.findSalaryByTitleWithinGivenYearMax( title, year, yearEnd).get(0));
+        System.out.println(salaryRange.toString());
+        List<Double> expected = new ArrayList<>(List.of(39186.0, 118492.0));
+        Assertions.assertEquals(expected, salaryRange);
     }
+
+
+    //TODO: add new method 1
+    //TODO: add new method 2
+    //TODO: add DAO and DTO
 
 
 
