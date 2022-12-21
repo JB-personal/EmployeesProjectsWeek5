@@ -3,16 +3,14 @@ package com.sparta.jpahibernate.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
+@Component
 public class DepartmentDTO {
     private String deptName;
-    private Long employees;
+    private String id;
 
-    @Override
-    public String toString() {
-        return deptName + ": " + employees;
-    }
 }

@@ -20,5 +20,7 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
     )
     List<DepartmentDTO> list(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
 
+    Department getDepartmentById(String id);
+    
     Department findByDeptName(String name);
 }

@@ -22,9 +22,7 @@ class JpaHibernateApplicationTests {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    DeptEmpRepository deptEmpRepo;
-    @Autowired
-    DepartmentRepository deptRepo;
+    private DepartmentDAO deptDao;
 
     @Autowired
     SalaryRepository salaryRepo;
@@ -126,50 +124,15 @@ class JpaHibernateApplicationTests {
 
     }
 
-    @Test
-    void countNumberOfEmployeesLeftDepartmentByYear(){
-        EmployeeRepositoryDao e =  new EmployeeRepositoryDao();
-        int res = e.countNumberOfEmployeesLeftDepartmentByYear();
-        Assertions.assertTrue( res == 11224);
-    }
+//    @Test
+//    void countNumberOfEmployeesLeftDepartmentByYear(){
+//        int res = empDao.countNumberOfEmployeesLeftDepartmentByYear();
+//        Assertions.assertTrue( res == 11224);
+//    }
 
     @Test
-    void findNoEmployeesForEachDepartment(){
-        List<String> list1 = deptEmpRepo.findDeptName();
-        List<Integer> list2 = deptEmpRepo.findNoOfEmployeesForEachDept(
-                LocalDate.of(1995,1,1),
-                LocalDate.of(2005,1,1)
-        );
-        for (int i = 0; i < list1.size(); i++){
-            System.out.println(list1.get(i) + " department has " + list2.get(i) + " employees.");
-        }
-    }
-
-    @Test
-    void test3(){
-        List<String> list1 = titleRepo.findAllTitles();
-        String male = "M";
-        String female = "F";
-        List<Double> males = salaryRepo.findAvgSalary(male);
-        List<Double> females = salaryRepo.findAvgSalary(female);
-        for (int i = 0; i < list1.size(); i++) {
-            if (males.get(i) < females.get(i)) {
-                System.out.print("The pay gap for " + list1.get(i) + " is higher for females by ");
-                System.out.printf("%.2f", (1-(males.get(i) / females.get(i))));
-                System.out.println();
-            }
-            if (males.get(i) > females.get(i)) {
-                System.out.print("The pay gap for " + list1.get(i) + " is higher for males by ");
-                System.out.printf("%.2f", (1-(females.get(i) / males.get(i))));
-                System.out.println();
-            }
-        }
-    }
-
-    @Test
-    void test4(){
-        DepartmentDAO dao = new DepartmentDAO(deptRepo);
-        List<DepartmentDTO> testlist = dao.findNoOfEmployeesForEachDept(
+    void findEmployeesByDepartmentByDateYearRange(){
+        List<EmpsForDeptsDTO> testlist = deptDao.findNoOfEmployeesForEachDept(
                 LocalDate.of(1995,1,1),
                 LocalDate.of(2005,1,1)
         );
@@ -178,10 +141,16 @@ class JpaHibernateApplicationTests {
     }
 
     @Test
-    void test5(){
-        List<SalaryDTO> maleSalary = salaryRepo.list("M");
-        List<SalaryDTO> femaleSalary = salaryRepo.list("F");
+    void findPayGapByTitleByGender(){
+        List<SalaryForTitlesDTO> maleSalary = salaryRepo.list("M");
+        List<SalaryForTitlesDTO> femaleSalary = salaryRepo.list("F");
         System.out.println(maleSalary);
         System.out.println(femaleSalary);
+    }
+
+    @Test
+    void test10(){
+        Department dept = deptDao.getDepartmentById("d009");
+        System.out.println(dept);
     }
 }

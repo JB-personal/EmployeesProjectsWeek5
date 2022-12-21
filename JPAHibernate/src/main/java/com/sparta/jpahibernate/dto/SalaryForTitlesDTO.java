@@ -3,17 +3,15 @@ package com.sparta.jpahibernate.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Data
-//@NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
-public class SalaryDTO {
+@Component
+public class SalaryForTitlesDTO {
     private String title;
     private String gender;
     private Double salary;
 
-    @Override
-    public String toString() {
-        return title + ", " + gender + ", " + salary;
-    }
 }

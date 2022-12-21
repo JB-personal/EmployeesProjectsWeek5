@@ -12,8 +12,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
+@Transactional
 public class DepartmentDAO implements IDepartment {
+
+    //DepartmentService service = new DepartmentService();
 
     private DepartmentRepository departmentRepository;
 
@@ -22,6 +25,7 @@ public class DepartmentDAO implements IDepartment {
         this.departmentRepository = departmentRepository;
     }
 
+
     @Override
     public List<Department> getAll() {
         return null;
@@ -29,7 +33,6 @@ public class DepartmentDAO implements IDepartment {
 
     @Override
     public void save(Department department) {
-
     }
 
     public void update(String id, String[] params) {
@@ -46,7 +49,7 @@ public class DepartmentDAO implements IDepartment {
     }
 
     @Override
-    public List<DepartmentDTO> findNoOfEmployeesForEachDept(LocalDate a, LocalDate b) {
-        return departmentRepository.list(a,b);
+    public List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate) {
+        return departmentRepository.findNoOfEmployeesForEachDept(fromDate, toDate);
     }
 }
