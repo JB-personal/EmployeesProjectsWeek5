@@ -37,4 +37,18 @@ public interface DeptEmpRepository extends JpaRepository<DeptEmp, DeptEmpId> {
 //            "JOIN departments d ON de.dept_no = d.dept_no WHERE from_date > ? AND to_date < ? GROUP BY de.dept_no",
 //            nativeQuery = true)
 //    List<String> getDeptEmp(LocalDate fromDate, LocalDate toDate);
+
+    @Query(
+            value = "SELECT d.dept_name FROM dept_emp de JOIN departments d ON de.dept_no = d.dept_no GROUP BY de.dept_no ORDER BY de.dept_no",
+            nativeQuery = true
+            )
+    List<String> findDeptName();
+
+    @Query(
+            value = "SELECT COUNT(de.emp_no) FROM dept_emp de JOIN departments d ON de.dept_no = d.dept_no WHERE " +
+                    "from_date > ? AND to_date < ? GROUP BY de.dept_no ORDER BY de.dept_no",
+            nativeQuery = true
+    )
+    List<Integer> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate);
+    List<DeptEmpId> findByDeptNo(String deptNo);
 }

@@ -19,4 +19,6 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
                     "ORDER BY d.id"
     )
     List<DeptEmpDTO> list(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
+
+    Department findByDeptName(String name);
 }

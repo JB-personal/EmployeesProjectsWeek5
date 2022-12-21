@@ -19,8 +19,6 @@ import org.junit.jupiter.api.Assertions;
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.lang.Math.abs;
-
 @SpringBootTest
 @Transactional
 class JpaHibernateApplicationTests {
@@ -42,6 +40,7 @@ class JpaHibernateApplicationTests {
     @Test
     void contextLoads() {
     }
+
 
     @Test
     void findEmployeeByLastName() {
