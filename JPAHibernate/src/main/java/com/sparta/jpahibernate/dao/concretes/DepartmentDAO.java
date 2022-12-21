@@ -1,29 +1,25 @@
 package com.sparta.jpahibernate.dao.concretes;
 
 import com.sparta.jpahibernate.dao.interfaces.IDepartment;
-import com.sparta.jpahibernate.dto.DeptEmpDTO;
+import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.entities.Department;
-import com.sparta.jpahibernate.repositories.DeptEmpRepository;
+import com.sparta.jpahibernate.repositories.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Repository
 public class DepartmentDAO implements IDepartment {
 
-    final DeptEmpRepository deptEmpRepo;
+    private DepartmentRepository departmentRepository;
 
-    public DepartmentDAO(DeptEmpRepository deptEmpRepo) {
-        this.deptEmpRepo = deptEmpRepo;
-    }
-
-    @Override
-    public Optional<Department> get(Integer id) {
-        return Optional.empty();
+    @Autowired
+    public DepartmentDAO(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
@@ -42,12 +38,12 @@ public class DepartmentDAO implements IDepartment {
     }
 
     @Override
-    public void delete(Integer id) {
-
+    public void delete(String id) {
+        departmentRepository.deleteById(id);
     }
 
     @Override
-    public List<DeptEmpDTO> findNoOfEmployeesForEachDept(LocalDate a, LocalDate b) {
-        return null;
+    public List<DepartmentDTO> findNoOfEmployeesForEachDept(LocalDate a, LocalDate b) {
+        return departmentRepository.list(a,b);
     }
 }

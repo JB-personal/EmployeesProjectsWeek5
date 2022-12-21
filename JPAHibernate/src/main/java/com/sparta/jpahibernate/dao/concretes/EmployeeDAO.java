@@ -9,11 +9,6 @@ import java.util.Optional;
 public class EmployeeDAO implements DAO<Employee> {
 
     @Override
-    public Optional<Employee> get(Integer id) {
-        return Optional.empty();
-    }
-
-    @Override
     public List<Employee> getAll() {
         return null;
     }
@@ -23,13 +18,5 @@ public class EmployeeDAO implements DAO<Employee> {
 
     }
 
-    @Override
-    public void update(Employee employee, String[] params) {
 
-    }
-
-    @Override
-    public void delete(Integer id) {
-
-    }
 }

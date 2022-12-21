@@ -1,20 +1,15 @@
 package com.sparta.jpahibernate;
 
-import com.sparta.jpahibernate.dto.DeptEmpDTO;
+import com.sparta.jpahibernate.dao.concretes.DepartmentDAO;
+import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.SalaryDTO;
-import com.sparta.jpahibernate.repositories.DepartmentRepository;
-import com.sparta.jpahibernate.repositories.DeptEmpRepository;
-import com.sparta.jpahibernate.repositories.SalaryRepository;
-import com.sparta.jpahibernate.repositories.TitleRepository;
+import com.sparta.jpahibernate.entities.Employee;
+import com.sparta.jpahibernate.repositories.*;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.sparta.jpahibernate.entities.Employee;
-import com.sparta.jpahibernate.repositories.EmployeeRepository;
-import com.sparta.jpahibernate.repositories.EmployeeRepositoryDao;
-import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.Assertions;
-
 
 import java.time.LocalDate;
 import java.util.List;
@@ -173,10 +168,12 @@ class JpaHibernateApplicationTests {
 
     @Test
     void test4(){
-        List<DeptEmpDTO> testlist = deptRepo.list(
+        DepartmentDAO dao = new DepartmentDAO(deptRepo);
+        List<DepartmentDTO> testlist = dao.findNoOfEmployeesForEachDept(
                 LocalDate.of(1995,1,1),
                 LocalDate.of(2005,1,1)
         );
+
         System.out.println(testlist);
     }
 

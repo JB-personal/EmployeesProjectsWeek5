@@ -31,31 +31,31 @@ class JpaHibernateTask2Tests {
     }
 
     // What is the average salary for a named department on a given date?
-    @Test
-    void averageSalaryForDeptOnGivenDate(){
-        double average = 0;
+//    @Test
+//    void averageSalaryForDeptOnGivenDate(){
+//        double average = 0;
+//
+//        // get department by name
+//        Department result = departmentRepository.findByDeptName("Finance");
+//        // use the department id that corresponds to the name
+//        String id = result.getId();
+//        // get all employee ids in department
+//        List<DeptEmpId> deptEmpId = deptEmpRepository.findByDeptNo(id);
+//
+//        // create empty array list to add employee salaries in department
+//        ArrayList<Integer> salaries = new ArrayList<>();
+//        for(DeptEmpId object : deptEmpId){
+//            Integer i = object.getEmpNo();
+//            int salaryFromId = salaryRepository.getSalaryFromEmployeeId(i);
+//            salaries.add(salaryFromId);
+//        }
+//
+//        for(int i: salaries){
+//            average += i;
+//        }
+//        average /= salaries.size();
 
-        // get department by name
-        Department result = departmentRepository.findByDeptName("Finance");
-        // use the department id that corresponds to the name
-        String id = result.getId();
-        // get all employee ids in department
-        List<DeptEmpId> deptEmpId = deptEmpRepository.findByDeptNo(id);
-
-        // create empty array list to add employee salaries in department
-        ArrayList<Integer> salaries = new ArrayList<>();
-        for(DeptEmpId object : deptEmpId){
-            Integer i = object.getEmpNo();
-            int salaryFromId = salaryRepository.getSalaryFromEmployeeId(i);
-            salaries.add(salaryFromId);
-        }
-
-        for(int i: salaries){
-            average += i;
-        }
-        average /= salaries.size();
-
-        Assertions.assertEquals();
+//        Assertions.assertEquals();
 
 
         // TODO: add logic for a given date
@@ -63,12 +63,12 @@ class JpaHibernateTask2Tests {
         //  SELECT * FROM employees.dept_emp INNER JOIN Salaries ON Salaries.emp_no=dept_emp.emp_no WHERE dept_emp.dept_no = "d002";
 
 
-    }
+//    }
 
     // Given a job title name, what is the range of salary values within a given year?
 
-    @Test
-    void givenJobTitleFindSalaryRangeWithinGivenYear(){
+//    @Test
+//    void givenJobTitleFindSalaryRangeWithinGivenYear(){
 
         // get title by name
 
@@ -79,7 +79,7 @@ class JpaHibernateTask2Tests {
         //
 
 
-    }
+//    }
 
 
 
