@@ -32,9 +32,12 @@ public class DepartmentDAO implements IDepartment {
 
     }
 
-    @Override
-    public void update(Department department, String[] params) {
-
+    public void update(String id, String[] params) {
+        Optional<Department> department = departmentRepository.findById(id);
+        if (department.isPresent()) {
+            department.get().setId(params[0]);
+            department.get().setDeptName(params[1]);
+        }
     }
 
     @Override
