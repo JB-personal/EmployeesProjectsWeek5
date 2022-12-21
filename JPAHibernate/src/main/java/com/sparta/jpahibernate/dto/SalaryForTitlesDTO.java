@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class DepartmentDTO {
-    private String deptName;
-    private String id;
+public class SalaryForTitlesDTO {
+    private String title;
+    private String gender;
+    private Double salary;
 
 }
