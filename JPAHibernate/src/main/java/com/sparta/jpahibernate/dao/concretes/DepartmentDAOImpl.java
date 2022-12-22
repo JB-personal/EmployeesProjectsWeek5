@@ -62,6 +62,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     @Override
     public void save(DepartmentDTO dto) {
         Department dept = new Department();
+        dept.setId(dto.getId());
         dept.setDeptName(dto.getDeptName());
         departmentRepository.save(dept);
     }
