@@ -20,10 +20,10 @@ import java.util.List;
 class JpaHibernateApplicationTests {
 
     @Autowired
-    private EmployeeDAO empDao;
+    private EmployeeDAOImpl empDao;
 
     @Autowired
-    private DepartmentDAO deptDao;
+    private DepartmentDAOImpl deptDao;
 
     @Autowired
     SalaryRepository salaryRepo;
@@ -139,16 +139,29 @@ class JpaHibernateApplicationTests {
     }
 
     @Test
-    void findPayGapByTitleByGender(){
+    void findPayGapByTitleByGender() {
         List<SalaryForTitlesDTO> maleSalary = salaryRepo.list("M");
         List<SalaryForTitlesDTO> femaleSalary = salaryRepo.list("F");
-        System.out.println(maleSalary);
-        System.out.println(femaleSalary);
+        String result = "";
+        double payGap = 0.0;
+        for (int i = 0; i < maleSalary.size(); i++) {
+            if (maleSalary.get(i).getAvgSalary() > femaleSalary.get(i).getAvgSalary()) {
+                payGap = ((maleSalary.get(i).getAvgSalary() - femaleSalary.get(i).getAvgSalary()) * 100) / femaleSalary.get(i).getAvgSalary();
+                result = maleSalary.get(i).getTitle() + " has a pay gap of " +
+                        String.format("%.3f", payGap)
+                        + "% favouring males";
+            } else {
+                payGap = ((femaleSalary.get(i).getAvgSalary() - maleSalary.get(i).getAvgSalary()) * 100) / maleSalary.get(i).getAvgSalary();
+                result = femaleSalary.get(i).getTitle() + " has a pay gap of " +
+                        String.format("%.3f", payGap)
+                        + " favouring females";
+            }
+            System.out.println(result);
+        }
     }
 
     @Test
     void test10(){
-        Department dept = deptDao.getDepartmentById("d009");
-        System.out.println(dept);
+        System.out.println(deptDao.findAll());
     }
 }

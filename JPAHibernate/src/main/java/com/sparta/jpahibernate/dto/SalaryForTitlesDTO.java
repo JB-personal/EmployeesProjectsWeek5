@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 public class SalaryForTitlesDTO {
     private String title;
     private String gender;
-    private Double salary;
+    private Double avgSalary;
 
 }

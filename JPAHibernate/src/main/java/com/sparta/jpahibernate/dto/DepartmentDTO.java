@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class DepartmentDTO {
-    private String deptName;
     private String id;
+    private String deptName;
 
 }
