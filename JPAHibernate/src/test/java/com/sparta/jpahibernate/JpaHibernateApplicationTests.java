@@ -1,6 +1,7 @@
 package com.sparta.jpahibernate;
 
 import com.sparta.jpahibernate.dao.concretes.*;
+import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
 import com.sparta.jpahibernate.dto.SalaryForTitlesDTO;
 import com.sparta.jpahibernate.entities.Department;
@@ -11,12 +12,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
 @Transactional
+
 class JpaHibernateApplicationTests {
 
     @Autowired
@@ -30,6 +33,8 @@ class JpaHibernateApplicationTests {
 
     @Autowired
     TitleRepository titleRepo;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     @Test
     void contextLoads() {
@@ -45,10 +50,10 @@ class JpaHibernateApplicationTests {
     }
 
     @Test
-    void findEmployeeByDepartmentAndDate(){
+    void findEmployeeByDepartmentAndDate() {
 
-        LocalDate fromDate = LocalDate.of(1998,10,10);
-        LocalDate toDate = LocalDate.of(2020,10,10);
+        LocalDate fromDate = LocalDate.of(1998, 10, 10);
+        LocalDate toDate = LocalDate.of(2020, 10, 10);
 
         String department = "Sales";
         //LocalDate fromDate = "1990-10-10";
@@ -59,21 +64,21 @@ class JpaHibernateApplicationTests {
     }
 
     @Test
-    void findEmployeeByDepartmentAndDateAfter2000(){
+    void findEmployeeByDepartmentAndDateAfter2000() {
 
-        LocalDate fromDate = LocalDate.of(2000,10,10);
-        LocalDate toDate = LocalDate.of(2020,10,10);
+        LocalDate fromDate = LocalDate.of(2000, 10, 10);
+        LocalDate toDate = LocalDate.of(2020, 10, 10);
 
         String department = "Sales";
         List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
         Assertions.assertTrue(res.size() == 269);
     }
+
     @Test
-    void findEmployeesInDevelopmentByDate()
-    {
-        LocalDate fromDate = LocalDate.of(1999,10,10);
-        LocalDate toDate = LocalDate.of(2020,10,10);
+    void findEmployeesInDevelopmentByDate() {
+        LocalDate fromDate = LocalDate.of(1999, 10, 10);
+        LocalDate toDate = LocalDate.of(2020, 10, 10);
 
         String department = "Development";
         List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
@@ -82,26 +87,26 @@ class JpaHibernateApplicationTests {
     }
 
     @Test
-    void findEmployeeByDepartmentAndDate3(){
+    void findEmployeeByDepartmentAndDate3() {
 
-        LocalDate fromDate = LocalDate.of(1000,10,10);
-        LocalDate toDate = LocalDate.of(1500,10,10);
+        LocalDate fromDate = LocalDate.of(1000, 10, 10);
+        LocalDate toDate = LocalDate.of(1500, 10, 10);
 
         String department = "Sales";
         //LocalDate fromDate = "1990-10-10";
         //String toDate = "2020-10-10";
         List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
-        Assertions.assertTrue( res.isEmpty() );
+        Assertions.assertTrue(res.isEmpty());
         //Assertions.assertTrue();
     }
 
     // invalid department
     @Test
-    void findEmployeeByDepartmentAndDate4(){
+    void findEmployeeByDepartmentAndDate4() {
 
-        LocalDate fromDate = LocalDate.of(1999,10,10);
-        LocalDate toDate = LocalDate.of(2012,10,10);
+        LocalDate fromDate = LocalDate.of(1999, 10, 10);
+        LocalDate toDate = LocalDate.of(2012, 10, 10);
 
         String department = "Snakes";
 
@@ -109,12 +114,13 @@ class JpaHibernateApplicationTests {
         List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
 
-        Assertions.assertTrue( res == null );
+        Assertions.assertTrue(res == null);
 
 
     }
+
     @Test
-    void countNumberOfEmployeesThatLeftADepartmentByYear(){
+    void countNumberOfEmployeesThatLeftADepartmentByYear() {
         String year = "2000";
         String department = "Sales";
         int res = empDao.countNumberOfEmployeesLeftDepartmentByYear(department, year);
@@ -130,10 +136,10 @@ class JpaHibernateApplicationTests {
 //    }
 
     @Test
-    void findEmployeesByDepartmentByDateYearRange(){
+    void findEmployeesByDepartmentByDateYearRange() {
         List<EmpsForDeptsDTO> testlist = deptDao.findNoOfEmployeesForEachDept(
-                LocalDate.of(1995,1,1),
-                LocalDate.of(2005,12,31)
+                LocalDate.of(1995, 1, 1),
+                LocalDate.of(2005, 12, 31)
         );
         System.out.println(testlist);
     }
@@ -161,7 +167,50 @@ class JpaHibernateApplicationTests {
     }
 
     @Test
-    void test10(){
-        System.out.println(deptDao.findAll());
+    void departmentCount() {
+
     }
+
+    @Test
+    @Rollback
+    void departmentDelete() {
+
+    }
+
+    @Test
+    void departmentFindAll() {
+        Assertions.assertFalse(deptDao.findAll().isEmpty());
+    }
+
+    @Test
+    @Rollback
+    void departmentUpdate() {
+
+    }
+
+    @Test
+    @Rollback
+    void departmentSave() {
+        deptDao.save(new DepartmentDTO(
+                "d010", "Test"
+        ));
+        Assertions.assertEquals(
+                departmentRepository.findDepartmentByDeptName("Test").getDeptName(),
+                "Test");
+    }
+
+
+
+    @Test
+    @Rollback
+    void departmentDeleteById() {
+
+    }
+
+    @Test
+    void a() {
+
+    }
+
 }
+
