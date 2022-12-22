@@ -1,4 +1,5 @@
 package com.sparta.jpahibernate.dao.concretes;
+
 import com.sparta.jpahibernate.dao.interfaces.DepartmentDAO;
 import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
@@ -72,6 +73,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         departmentRepository.save(dept);
     }
 
+    @Override
     public void update(String id, String[] params) {
         Optional<Department> optDept = departmentRepository.findById(id);
         if (optDept.isPresent()) {
