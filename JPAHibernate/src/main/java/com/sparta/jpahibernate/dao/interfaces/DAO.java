@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DAO<T> {
-
-    List<T> getAll();
-
-    void save(T t);
+    long count();
+    void delete(T dto);
+    List<T> findAll();
+    void save(T dto);
 
 }

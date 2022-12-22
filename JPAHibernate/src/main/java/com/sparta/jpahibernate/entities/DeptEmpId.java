@@ -31,7 +31,6 @@ public class DeptEmpId implements Serializable {
     public void setDeptNo(String deptNo) {
         this.deptNo = deptNo;
     }
-
     @Override
     public String toString() {
         return "DeptEmpId{" +
