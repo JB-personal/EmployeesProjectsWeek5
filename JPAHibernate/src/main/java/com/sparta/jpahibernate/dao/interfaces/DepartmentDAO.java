@@ -2,7 +2,6 @@ package com.sparta.jpahibernate.dao.interfaces;
 
 import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
-import com.sparta.jpahibernate.entities.Department;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,7 +16,8 @@ public interface DepartmentDAO extends DAO<DepartmentDTO> {
 
     void update(String id, String[] params);
 
-    Department getDepartmentById(String id);
+    List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate);
 
-    List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate a, LocalDate b);
+    DepartmentDTO findDepartmentByDeptName(String deptName);
+
 }
