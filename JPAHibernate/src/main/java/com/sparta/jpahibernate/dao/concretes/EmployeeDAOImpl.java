@@ -1,8 +1,9 @@
 package com.sparta.jpahibernate.dao.concretes;
 
-import com.sparta.jpahibernate.dao.interfaces.DAO;
 import com.sparta.jpahibernate.dao.interfaces.EmployeeDAO;
 import com.sparta.jpahibernate.dto.EmployeeDTO;
+import com.sparta.jpahibernate.dto.EmpsByDeptsDTO;
+import com.sparta.jpahibernate.dto.SalaryForTitlesDTO;
 import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.EmployeeRepository;
 import com.sparta.jpahibernate.repositories.SalaryRepository;
@@ -32,7 +33,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public long count() {
-        return 0;
+        return employeeRepository.count();
     }
 
     @Override
@@ -65,11 +66,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         employeeRepository.save(emp);
     }
 
-    public List<Employee> findByLastName(String lastName) {
-        return employeeRepository.findByLastName(lastName);
+    public List<EmployeeDTO> findByLastName(String lastName) {
+        List<Employee> employees = employeeRepository.findByLastName(lastName);
+        List<EmployeeDTO> employeeDTOs = new ArrayList<>();
+        for(Employee employee : employees) {
+            employeeDTOs.add(new EmployeeDTO(employee.getId(), employee.getBirthDate(), employee.getFirstName(),
+                    employee.getLastName(), employee.getGender(), employee.getHireDate()));
+        }
+        return employeeDTOs;
     }
 
-    public List<Employee> findByDepartmentAndDate(String department, LocalDate fromDate, LocalDate toDate) {
+    public List<EmpsByDeptsDTO> findByDepartmentAndDate(String department, LocalDate fromDate, LocalDate toDate) {
         return employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
     }
 

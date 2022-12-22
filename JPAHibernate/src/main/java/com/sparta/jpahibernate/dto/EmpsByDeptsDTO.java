@@ -1,7 +1,5 @@
 package com.sparta.jpahibernate.dto;
 
-import com.sparta.jpahibernate.entities.Employee;
-import com.sparta.jpahibernate.entities.TitleId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class TitleDTO {
-    private TitleId id;
-    private Employee empNo;
-    private LocalDate toDate;
+public class EmpsByDeptsDTO {
+    private Integer id;
+    private LocalDate birthDate;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String gender;
+
+    private LocalDate hireDate;
+    private String deptName;
 }
