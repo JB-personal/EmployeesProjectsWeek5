@@ -1,6 +1,8 @@
 package com.sparta.jpahibernate.dao.concretes;
 
 import com.sparta.jpahibernate.dao.interfaces.DAO;
+import com.sparta.jpahibernate.dto.EmpByDeptDTO;
+import com.sparta.jpahibernate.dto.EmployeeDTO;
 import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class EmployeeDAO implements DAO<Employee> {
         return employeeRepository.findByLastName(lastName);
     }
 
-    public List<Employee> findByDepartmentAndDate(String department, LocalDate fromDate, LocalDate toDate) {
+    public List<EmpByDeptDTO> findByDepartmentAndDate(String department, LocalDate fromDate, LocalDate toDate) {
         return employeeRepository.findByDepartmentAndDate(department, fromDate, toDate);
     }
 

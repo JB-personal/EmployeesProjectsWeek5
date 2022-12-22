@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Embeddable
 public class DeptEmpId implements Serializable {
-    private static final long serialVersionUID = 4402838582915391071L;
+    private static final long serialVersionUID = 5369615880944956635L;
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;
 
@@ -30,14 +30,6 @@ public class DeptEmpId implements Serializable {
 
     public void setDeptNo(String deptNo) {
         this.deptNo = deptNo;
-    }
-
-    @Override
-    public String toString() {
-        return "DeptEmpId{" +
-                "empNo=" + empNo +
-                ", deptNo='" + deptNo + '\'' +
-                '}';
     }
 
     @Override

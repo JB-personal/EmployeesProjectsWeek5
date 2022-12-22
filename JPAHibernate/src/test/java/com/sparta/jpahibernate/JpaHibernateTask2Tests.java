@@ -1,10 +1,7 @@
 package com.sparta.jpahibernate;
 
-import com.sparta.jpahibernate.entities.Department;
-import com.sparta.jpahibernate.entities.DeptEmpId;
-import com.sparta.jpahibernate.entities.Employee;
+import com.sparta.jpahibernate.dao.concretes.DepartmentDAO;
 import com.sparta.jpahibernate.repositories.DepartmentRepository;
-import com.sparta.jpahibernate.repositories.DeptEmpRepository;
 import com.sparta.jpahibernate.repositories.SalaryRepository;
 import com.sparta.jpahibernate.repositories.TitleRepository;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +19,7 @@ class JpaHibernateTask2Tests {
     private DepartmentRepository departmentRepository;
 
     @Autowired
-    private DeptEmpRepository deptEmpRepository;
+    private DepartmentDAO deptDao;
 
     @Autowired
     private SalaryRepository salaryRepository;

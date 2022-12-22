@@ -30,25 +30,6 @@ public class DeptEmp {
     @Column(name = "to_date", nullable = false)
     private LocalDate toDate;
 
-
-    public DeptEmp() {
-    }
-
-    public DeptEmp(Employee empNo, Department deptNo, LocalDate fromDate, LocalDate toDate) {
-        this.empNo = empNo;
-        this.deptNo = deptNo;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-    }
-
-    public DeptEmp(DeptEmpId id, Employee empNo, Department deptNo, LocalDate fromDate, LocalDate toDate) {
-        this.id = id;
-        this.empNo = empNo;
-        this.deptNo = deptNo;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
-    }
-
     public DeptEmpId getId() {
         return id;
     }
@@ -89,14 +70,4 @@ public class DeptEmp {
         this.toDate = toDate;
     }
 
-    @Override
-    public String toString() {
-        return "DeptEmp{" +
-                "id=" + id +
-                ", empNo=" + empNo +
-                ", deptNo=" + deptNo +
-                ", fromDate=" + fromDate +
-                ", toDate=" + toDate +
-                '}';
-    }
 }
