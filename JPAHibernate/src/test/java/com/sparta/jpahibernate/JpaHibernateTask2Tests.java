@@ -1,5 +1,7 @@
 package com.sparta.jpahibernate;
 
+import com.sparta.jpahibernate.dao.concretes.DepartmentDAO;
+import com.sparta.jpahibernate.dto.MgrsForDeptsDTO;
 import com.sparta.jpahibernate.entities.Department;
 import com.sparta.jpahibernate.entities.DeptEmpId;
 import com.sparta.jpahibernate.entities.Employee;
@@ -18,6 +20,12 @@ import java.util.List;
 
 @SpringBootTest
 class JpaHibernateTask2Tests {
+
+    @Autowired
+    private DepartmentDAO deptDao;
+
+    @Autowired
+    private MgrsForDeptsDTO mgrsForDeptsDTO;
 
     @Autowired
     private DepartmentRepository departmentRepository;
@@ -65,6 +73,17 @@ class JpaHibernateTask2Tests {
         System.out.println(salaryRange.toString());
         List<Double> expected = new ArrayList<>(List.of(39186.0, 118492.0));
         Assertions.assertEquals(expected, salaryRange);
+    }
+
+    // Given a year and department, what are the names of the managers?
+
+    @Test
+    void givenYearAndDepartmentFindNamesOfManagers(){
+
+        String year = "2010";
+        String dept = "Finance";
+        List<MgrsForDeptsDTO> testList = deptDao.findManagersInDepartmentOnGivenYear();
+        System.out.println(testList);
     }
 
 

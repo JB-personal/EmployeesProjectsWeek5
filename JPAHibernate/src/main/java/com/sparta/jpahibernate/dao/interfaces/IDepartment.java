@@ -16,4 +16,6 @@ public interface IDepartment extends DAO<Department> {
     public Department getDepartmentById(String id);
 
     List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate a, LocalDate b);
+
+    List<MgrsForDeptsDTO> findManagersInDepartmentOnGivenYear();
 }
