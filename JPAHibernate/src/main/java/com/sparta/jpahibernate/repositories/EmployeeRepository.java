@@ -30,4 +30,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "AND dept_emp.to_date " +
             "BETWEEN :year'-01-01' AND :year'-12-31'", nativeQuery = true )
     int countNumberOfEmployeesLeftDepartmentByYear(@Param("department") String department, @Param("year") String year);
+
+    @Query(value = "SELECT new com.sparta.jpahibernate.dto.ManagersForDeptsDTO(e.firstName, e.lastName, d.deptName) " +
+            "FROM DeptManager m " +
+            "JOIN m.deptNo d " +
+            "JOIN m.empNo e " +
+            "WHERE d.deptName = :department " +
+            "AND (m.fromDate >= :fromDate OR m.toDate <= :toDate) ")
+    List<ManagersForDeptsDTO> findManagersInDepartmentOnGivenYear(
+            @Param("department") String department,
+            @Param("fromDate") LocalDate fromDate,
+            @Param("toDate") LocalDate toDate );
+
+
 }

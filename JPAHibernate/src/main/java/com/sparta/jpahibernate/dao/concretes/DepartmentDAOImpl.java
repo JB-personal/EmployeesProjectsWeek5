@@ -3,12 +3,13 @@ import com.sparta.jpahibernate.dao.interfaces.DepartmentDAO;
 import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
 import com.sparta.jpahibernate.entities.Department;
-import com.sparta.jpahibernate.repositories.*;
+import com.sparta.jpahibernate.repositories.DepartmentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +43,12 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
     @Override
     public List<DepartmentDTO> findAll() {
-        return List.of(new DepartmentDTO(departmentRepository.findAll().toString(),
-                        departmentRepository.findAll().toString()));
+        List<Department> departments = departmentRepository.findAll();
+        List<DepartmentDTO> departmentDTOs = new ArrayList<>();
+        for (Department department : departments) {
+            departmentDTOs.add(new DepartmentDTO(department.getId(), department.getDeptName()));
+        }
+        return departmentDTOs;
     }
 
     @Override
@@ -91,9 +96,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     }
 
     @Override
-    public Department getDepartmentById(String id) {
-        Optional<Department> optDept = departmentRepository.findById(id);
-        return optDept.orElse(null);
+    public DepartmentDTO findDepartmentByDeptName(String deptName) {
+        return new DepartmentDTO(departmentRepository.findDepartmentByDeptName(deptName).getId(),
+                departmentRepository.findDepartmentByDeptName(deptName).getDeptName());
     }
-
 }

@@ -13,5 +13,4 @@ public class EmpsForDeptsDTO {
     private String deptName;
     private Long employees;
 
-
 }

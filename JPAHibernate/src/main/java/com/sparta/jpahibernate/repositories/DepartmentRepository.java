@@ -21,4 +21,6 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
     List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
 
     Department findDepartmentByDeptName(String deptName);
+
+
 }
