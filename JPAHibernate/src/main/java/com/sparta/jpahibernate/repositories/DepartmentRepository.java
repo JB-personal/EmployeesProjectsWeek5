@@ -1,6 +1,6 @@
 package com.sparta.jpahibernate.repositories;
 
-import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
+import com.sparta.jpahibernate.dto.NoOfEmpsForEachDeptDTO;
 import com.sparta.jpahibernate.entities.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,7 +18,7 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
                     "GROUP BY de.deptNo " +
                     "ORDER BY d.id"
     )
-    List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
+    List<NoOfEmpsForEachDeptDTO> findNoOfEmployeesForEachDept(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
 
     Department findDepartmentByDeptName(String deptName);
 }

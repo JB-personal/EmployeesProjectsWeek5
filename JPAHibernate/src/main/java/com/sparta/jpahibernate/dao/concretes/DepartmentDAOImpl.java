@@ -1,7 +1,7 @@
 package com.sparta.jpahibernate.dao.concretes;
 import com.sparta.jpahibernate.dao.interfaces.DepartmentDAO;
 import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
+import com.sparta.jpahibernate.dto.NoOfEmpsForEachDeptDTO;
 import com.sparta.jpahibernate.entities.Department;
 import com.sparta.jpahibernate.repositories.*;
 import jakarta.transaction.Transactional;
@@ -86,7 +86,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     }
 
     @Override
-    public List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate) {
+    public List<NoOfEmpsForEachDeptDTO> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate) {
         return departmentRepository.findNoOfEmployeesForEachDept(fromDate, toDate);
     }
 

@@ -2,9 +2,9 @@ package com.sparta.jpahibernate;
 
 import com.sparta.jpahibernate.dao.concretes.*;
 import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
+import com.sparta.jpahibernate.dto.EmpsByDeptsDTO;
+import com.sparta.jpahibernate.dto.NoOfEmpsForEachDeptDTO;
 import com.sparta.jpahibernate.dto.SalaryForTitlesDTO;
-import com.sparta.jpahibernate.entities.Department;
 import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.*;
 import jakarta.transaction.Transactional;
@@ -58,9 +58,9 @@ class JpaHibernateApplicationTests {
         String department = "Sales";
         //LocalDate fromDate = "1990-10-10";
         //String toDate = "2020-10-10";
-        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
-        System.out.println(res);
-        Assertions.assertTrue(res.size() == 8830);
+        List<EmpsByDeptsDTO> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
+        System.out.println(res + " " + res.size());
+        Assertions.assertTrue(res.size() == 1358);
     }
 
     @Test
@@ -70,9 +70,9 @@ class JpaHibernateApplicationTests {
         LocalDate toDate = LocalDate.of(2020, 10, 10);
 
         String department = "Sales";
-        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
-        System.out.println(res);
-        Assertions.assertTrue(res.size() == 269);
+        List<EmpsByDeptsDTO> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
+        System.out.println(res + " " + res.size());
+        Assertions.assertTrue(res.size() == 19);
     }
 
     @Test
@@ -81,9 +81,9 @@ class JpaHibernateApplicationTests {
         LocalDate toDate = LocalDate.of(2020, 10, 10);
 
         String department = "Development";
-        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
-        System.out.println(res);
-        Assertions.assertTrue(res.size() == 2513);
+        List<EmpsByDeptsDTO> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
+        System.out.println(res  + " " + res.size());
+        Assertions.assertTrue(res.size() == 553);
     }
 
     @Test
@@ -95,7 +95,7 @@ class JpaHibernateApplicationTests {
         String department = "Sales";
         //LocalDate fromDate = "1990-10-10";
         //String toDate = "2020-10-10";
-        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
+        List<EmpsByDeptsDTO> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
         Assertions.assertTrue(res.isEmpty());
         //Assertions.assertTrue();
@@ -111,10 +111,10 @@ class JpaHibernateApplicationTests {
         String department = "Snakes";
 
 
-        List<Employee> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
+        List<EmpsByDeptsDTO> res = empDao.findByDepartmentAndDate(department, fromDate, toDate);
         System.out.println(res);
 
-        Assertions.assertTrue(res == null);
+        Assertions.assertTrue(res.size() == 0);
 
 
     }
@@ -137,7 +137,7 @@ class JpaHibernateApplicationTests {
 
     @Test
     void findEmployeesByDepartmentByDateYearRange() {
-        List<EmpsForDeptsDTO> testlist = deptDao.findNoOfEmployeesForEachDept(
+        List<NoOfEmpsForEachDeptDTO> testlist = deptDao.findNoOfEmployeesForEachDept(
                 LocalDate.of(1995, 1, 1),
                 LocalDate.of(2005, 12, 31)
         );

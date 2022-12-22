@@ -5,13 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class EmpsForDeptsDTO {
+public class EmpsByDeptsDTO {
+    private Integer id;
+    private LocalDate birthDate;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private LocalDate hireDate;
     private String deptName;
-    private Long employees;
-
-
 }
