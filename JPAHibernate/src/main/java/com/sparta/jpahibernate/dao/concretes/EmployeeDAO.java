@@ -3,6 +3,7 @@ package com.sparta.jpahibernate.dao.concretes;
 import com.sparta.jpahibernate.dao.interfaces.DAO;
 import com.sparta.jpahibernate.dto.EmpByDeptDTO;
 import com.sparta.jpahibernate.dto.EmployeeDTO;
+import com.sparta.jpahibernate.dto.SalaryForTitlesDTO;
 import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,9 @@ public class EmployeeDAO implements DAO<Employee> {
 
     public int countNumberOfEmployeesLeftDepartmentByYear(String dept, String year) {
         return employeeRepository.countNumberOfEmployeesLeftDepartmentByYear(dept, year);
+    }
+
+    public List<SalaryForTitlesDTO> findAvgSalaryByGender(String gender) {
+        return employeeRepository.findAvgSalaryByGender(gender);
     }
 }

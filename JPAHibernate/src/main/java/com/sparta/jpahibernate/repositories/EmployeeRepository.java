@@ -2,6 +2,7 @@ package com.sparta.jpahibernate.repositories;
 
 import com.sparta.jpahibernate.dto.EmpByDeptDTO;
 import com.sparta.jpahibernate.dto.EmployeeDTO;
+import com.sparta.jpahibernate.dto.SalaryForTitlesDTO;
 import com.sparta.jpahibernate.entities.Employee;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,4 +33,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "AND dept_emp.to_date " +
             "BETWEEN :year'-01-01' AND :year'-12-31'", nativeQuery = true )
     int countNumberOfEmployeesLeftDepartmentByYear(@Param("department") String department, @Param("year") String year);
+
+    @Query(
+            "SELECT new com.sparta.jpahibernate.dto.SalaryForTitlesDTO(t.id.title, e.gender, AVG(s.salary)) " +
+                    "FROM Employee e LEFT JOIN Salary s ON e.id = s.id.empNo " +
+                    "LEFT JOIN Title t ON e.id = t.id.empNo WHERE e.gender = :gender " +
+                    "GROUP BY t.id.title " +
+                    "ORDER BY t.id.title "
+    )
+    List<SalaryForTitlesDTO> findAvgSalaryByGender(@Param("gender") String gender);
 }

@@ -142,8 +142,8 @@ class JpaHibernateApplicationTests {
 
     @Test
     void findPayGapByTitleByGender(){
-        List<SalaryForTitlesDTO> maleSalary = salaryRepo.list("M");
-        List<SalaryForTitlesDTO> femaleSalary = salaryRepo.list("F");
+        List<SalaryForTitlesDTO> maleSalary = empDao.findAvgSalaryByGender("M");
+        List<SalaryForTitlesDTO> femaleSalary = empDao.findAvgSalaryByGender("F");
         System.out.println(maleSalary);
         System.out.println(femaleSalary);
     }
