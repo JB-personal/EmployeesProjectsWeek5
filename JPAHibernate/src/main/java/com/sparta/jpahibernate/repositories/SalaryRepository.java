@@ -17,7 +17,7 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             "GROUP BY t.id.title " +
             "ORDER BY t.id.title "
     )
-    List<SalaryForTitlesDTO> list(@Param("gender") String gender);
+    List<SalaryForTitlesDTO> findAvgSalaryByGender(@Param("gender") String gender);
 
     @Query(
             value = "SELECT avg(salaries.salary) FROM employees JOIN salaries, departments, dept_emp WHERE " +
