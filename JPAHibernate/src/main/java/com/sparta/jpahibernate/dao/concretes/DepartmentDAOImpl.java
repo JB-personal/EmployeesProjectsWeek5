@@ -6,6 +6,7 @@ import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
 import com.sparta.jpahibernate.entities.Department;
 import com.sparta.jpahibernate.repositories.DepartmentRepository;
 import jakarta.transaction.Transactional;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +97,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     public List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(LocalDate fromDate, LocalDate toDate) {
         return departmentRepository.findNoOfEmployeesForEachDept(fromDate, toDate);
     }
+
 
     @Override
     public DepartmentDTO findDepartmentByDeptName(String deptName) {
