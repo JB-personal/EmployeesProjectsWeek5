@@ -8,7 +8,10 @@ import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.EmployeeRepository;
 import com.sparta.jpahibernate.repositories.SalaryRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -20,8 +23,9 @@ import java.util.Optional;
 @Service
 @Transactional
 public class EmployeeDAOImpl implements EmployeeDAO {
-
+    @Autowired
     private final EmployeeRepository employeeRepository;
+    @Autowired
     private final SalaryRepository salaryRepository;
 
     @Autowired
