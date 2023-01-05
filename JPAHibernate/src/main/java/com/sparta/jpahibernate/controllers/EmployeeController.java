@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
 import com.sparta.jpahibernate.dto.EmployeeDTO;
+import com.sparta.jpahibernate.dto.EmpsByDeptsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -96,4 +99,27 @@ public class EmployeeController {
 //            return new ResponseEntity<>("{\"message\":\"Employee " + id+ " not found\"},", headers, HttpStatus.NOT_FOUND);
 //        }
 //    }
+
+    @GetMapping("/countNumberOfEmployeesLeftDepartmentByYear")
+    public int countNumberOfEmployeesLeftDepartmentByYear(@RequestParam("dep") String dep,
+                                                          @RequestParam("year") String year){
+
+        System.out.println( "In the year:" + year + "the number of employees left in department:" + dep );
+        int res = empDao.countNumberOfEmployeesLeftDepartmentByYear(dep,year);
+        System.out.println(res);
+        return res;
+    }
+
+    @GetMapping("/findByDepartmentAndDate")
+    public List<EmpsByDeptsDTO> findByDepartmentAndDate(@RequestParam("dep") String dep,
+                                                        @RequestParam("fromDate") LocalDate fromDate,
+                                                        @RequestParam("toDate") LocalDate toDate){
+
+        return empDao.findByDepartmentAndDate(dep, fromDate, toDate);
+    }
+
+    @GetMapping("/findByLastName")
+    public List<EmployeeDTO> findByLastName(@RequestParam("lastName") String lastName){
+        return empDao.findByLastName(lastName);
+    }
 }

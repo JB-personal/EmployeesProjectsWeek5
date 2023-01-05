@@ -6,6 +6,7 @@ import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
 import com.sparta.jpahibernate.entities.Department;
 import com.sparta.jpahibernate.repositories.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -126,13 +127,17 @@ public class DepartmentController {
 
     @GetMapping("/findEmployeesForAllDepartments")
     public List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(
-            @RequestParam LocalDate fromDate,
-            @RequestParam LocalDate toDate) {
+            @RequestParam("fromDate") LocalDate fromDate,
+            @RequestParam("toDate") LocalDate toDate) {
         System.out.println(fromDate + " " + toDate);
         return deptDao.findNoOfEmployeesForEachDept(fromDate, toDate);
     }
 
-
-
+    @GetMapping("/findDepartmentByDeptName")
+    public DepartmentDTO findDeptByDeptName(
+            @RequestParam("deptName") String deptName){
+        System.out.println(deptName);
+        return deptDao.findDepartmentByDeptName(deptName);
+    }
 
 }
