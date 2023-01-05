@@ -3,6 +3,8 @@
   <component name="JpaBuddyIdeaProjectConfig">
     <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="35bcde0c-4d19-4b89-be92-ad2a3b232cfc" />
+    <option name="reLastEntityCreationPackage" value="JPAHibernate/src/main/java/com/sparta/jpahibernate" />
     <option name="packageNameForExtractSuperclass" value="com.sparta.jpahibernate.entities" />
   </component>
 </project>
