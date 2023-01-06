@@ -73,12 +73,6 @@ public class DepartmentController {
 //                    "No department with the specified ID could be found");
 //    }
 
-    @ExceptionHandler
-    public String reportError(Throwable t) {
-        t = new Throwable("<h1>Error! You messed up.</h1>");
-        return t.getMessage();
-    }
-
     @PutMapping("/put")
     public ResponseEntity<String> updateDepartment(@RequestBody DepartmentDTO newState, @RequestParam String apiKey) {
 
