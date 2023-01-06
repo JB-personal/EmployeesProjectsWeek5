@@ -36,8 +36,7 @@ public class DeptControllerTesting {
 
         HttpClient client = HttpClients.createDefault();
         String input = "NonExistentDepartment";
-        String apiKey = "12345";
-        HttpGet get = new HttpGet( "http://localhost:8080/api/departments/findDepartmentByDeptName?deptName=" + input + "&apiKey=" + apiKey);
+        HttpGet get = new HttpGet( "http://localhost:8080/api/departments/findDepartmentByDeptName?deptName=" + input);
         HttpResponse response = client.execute(get);
         get.setHeader("Accept", "application/json");
         get.setHeader("Content-type", "application/json");
