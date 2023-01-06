@@ -25,7 +25,7 @@ public class User {
     private Instant lastUpdate;
 
     @Column(name = "level", length = 45)
-    private String level;
+    private String level = "basic";
 
     public Long getId() {
         return id;

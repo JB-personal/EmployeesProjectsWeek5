@@ -1,6 +1,7 @@
 package com.sparta.jpahibernate.controllers;
 
 import com.sparta.jpahibernate.dao.concretes.DepartmentDAOImpl;
+import com.sparta.jpahibernate.dao.concretes.UserDAOImpl;
 import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
 import com.sparta.jpahibernate.entities.Department;
@@ -25,19 +26,25 @@ public class DepartmentController {
     @Autowired
     private DepartmentDAOImpl deptDao;
 
+    @Autowired
+    private UserDAOImpl userDao;
+
 
     @GetMapping("/{id}")
-    public DepartmentDTO findDepartmentById(@PathVariable String id) {
+    public DepartmentDTO findDepartmentById(@PathVariable String id, @RequestParam String apiKey) {
         return deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "No department with the specified ID could be found"));
     }
 
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable String id){
-        deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "No department with the specific ID could be found"));
-        deptDao.deleteById(id);
+    public void deleteById(@PathVariable String id, @RequestParam String apiKey){
+        if (userDao.isAdmin(apiKey)) {
+            deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No department with the specific ID could be found"));
+            deptDao.deleteById(id);
+        }
+
     }
 
 //    @DeleteMapping("/{id}")
@@ -48,7 +55,7 @@ public class DepartmentController {
 //            deptDao.deleteById(id);
 //            responseEntity = new ResponseEntity<>(
 //                    null,
-//                    HttpStatus.NO_CONTENT);
+//                    HttpStatus.OK);
 //        } else {
 //            responseEntity = new ResponseEntity<>(
 //                    "{\"message\":\"Department " + id + " not found\"}",
@@ -56,6 +63,7 @@ public class DepartmentController {
 //        }
 //        return responseEntity;
 //    }
+
 //    @DeleteMapping("/departments")
 //    public DepartmentDTO deleteById(@RequestBody DepartmentDTO dept){
 //        if (deptDao.findById(dept.getId()).isPresent()){
@@ -65,28 +73,32 @@ public class DepartmentController {
 //                    "No department with the specified ID could be found");
 //    }
 
-//    @ExceptionHandler
-//    public String reportError(Throwable t) {
-//        t = new Throwable("<h1>Error! You messed up.</h1>");
-//        return t.getMessage();
-//    }
+    @ExceptionHandler
+    public String reportError(Throwable t) {
+        t = new Throwable("<h1>Error! You messed up.</h1>");
+        return t.getMessage();
+    }
 
-    @PutMapping("")
-    public DepartmentDTO updateDepartment(@RequestBody DepartmentDTO newState) {
-        Optional<DepartmentDTO> original = deptDao.findById(newState.getId());
-        DepartmentDTO revisedState = null;
-        // if the record exists, update it
-        if (original.isPresent()){
-            revisedState = original.get();
-            if(newState.getDeptName() != null){
-                revisedState.setDeptName(newState.getDeptName());
+    @PutMapping("/put")
+    public ResponseEntity<String> updateDepartment(@RequestBody DepartmentDTO newState, @RequestParam String apiKey) {
+
+        if (userDao.isAdmin(apiKey) || userDao.isUpdate(apiKey)) {
+            Optional<DepartmentDTO> original = deptDao.findById(newState.getId());
+            DepartmentDTO revisedState = null;
+            // if the record exists, update it
+            if (original.isPresent()){
+                revisedState = original.get();
+                if(newState.getDeptName() != null){
+                    revisedState.setDeptName(newState.getDeptName());
+                }
+                deptDao.save(revisedState);
+            } else {
+                // otherwise, insert it
+                deptDao.save(newState);
             }
-            deptDao.save(revisedState);
-        } else {
-            // otherwise, insert it
-            deptDao.save(newState);
+            return new ResponseEntity<>(revisedState.toString(), HttpStatus.OK);
         }
-        return revisedState;
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/count")
@@ -94,17 +106,20 @@ public class DepartmentController {
         return deptDao.count();
     }
 
-    @PostMapping("")
-    public DepartmentDTO createDepartment(@RequestBody DepartmentDTO newDeptDTO){
-        newDeptDTO.setId(newDeptDTO.getId());
-        newDeptDTO.setDeptName(newDeptDTO.getDeptName());
-        System.out.println(newDeptDTO);
-        deptDao.save(newDeptDTO);
-        return newDeptDTO;
+    @PostMapping("/post")
+    public ResponseEntity<String> createDepartment(@RequestBody DepartmentDTO newDeptDTO, @RequestParam String apiKey) {
+        if(userDao.isAdmin(apiKey) || userDao.isUpdate(apiKey)) {
+            newDeptDTO.setId(newDeptDTO.getId());
+            newDeptDTO.setDeptName(newDeptDTO.getDeptName());
+            System.out.println(newDeptDTO);
+            deptDao.save(newDeptDTO);
+            return new ResponseEntity<>(newDeptDTO.toString(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/findAll")
-    public List<DepartmentDTO> findAllDepartments(){
+    public List<DepartmentDTO> findAllDepartments(@RequestParam String apiKey){
         List<DepartmentDTO> departments = deptDao.findAll();
         List<DepartmentDTO> departmentDTOs = new ArrayList<>();
         for (DepartmentDTO dept : departments){
@@ -114,13 +129,13 @@ public class DepartmentController {
     }
 
     @GetMapping("/findByName/{deptName}")
-    public DepartmentDTO findDeptByTitle(@PathVariable String deptName){
+    public DepartmentDTO findDeptByTitle(@PathVariable String deptName, @RequestParam String apiKey){
         return new DepartmentDTO(deptDao.findDepartmentByDeptName(deptName).getId(),
                 deptDao.findDepartmentByDeptName(deptName).getDeptName());
     }
 
     @GetMapping("/existsById/{id}")
-    public boolean existsById(@PathVariable String id){
+    public boolean existsById(@PathVariable String id, @RequestParam String apiKey){
         Optional<DepartmentDTO> result = deptDao.findById(id);
         return result.isPresent();
     }
@@ -128,14 +143,16 @@ public class DepartmentController {
     @GetMapping("/findEmployeesForAllDepartments")
     public List<EmpsForDeptsDTO> findNoOfEmployeesForEachDept(
             @RequestParam("fromDate") LocalDate fromDate,
-            @RequestParam("toDate") LocalDate toDate) {
+            @RequestParam("toDate") LocalDate toDate,
+            @RequestParam String apiKey) {
         System.out.println(fromDate + " " + toDate);
         return deptDao.findNoOfEmployeesForEachDept(fromDate, toDate);
     }
 
     @GetMapping("/findDepartmentByDeptName")
     public DepartmentDTO findDeptByDeptName(
-            @RequestParam("deptName") String deptName){
+            @RequestParam("deptName") String deptName,
+            @RequestParam String apiKey){
         System.out.println(deptName);
         return deptDao.findDepartmentByDeptName(deptName);
     }

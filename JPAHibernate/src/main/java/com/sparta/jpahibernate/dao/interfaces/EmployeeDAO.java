@@ -1,6 +1,7 @@
 package com.sparta.jpahibernate.dao.interfaces;
 
 import com.sparta.jpahibernate.dto.EmployeeDTO;
+import com.sparta.jpahibernate.dto.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
