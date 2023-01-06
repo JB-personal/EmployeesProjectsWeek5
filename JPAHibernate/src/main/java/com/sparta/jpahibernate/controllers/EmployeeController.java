@@ -17,7 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -32,8 +34,20 @@ public class EmployeeController {
     @PostMapping("/add")
     public ResponseEntity<String> addNewEmployee(@RequestBody EmployeeDTO newEmployee, @RequestParam String apiKey){
         if (userDao.isAdmin(apiKey) || userDao.isUpdate(apiKey)){
+            Optional<EmployeeDTO> original = empDao.findById(newEmployee.getId());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("content-type", "application/json");
+            if (original.isPresent()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Employee with id: " + newEmployee.getId() + " already exists");
+            } else if (Stream.of(newEmployee.getId(), newEmployee.getBirthDate(), newEmployee.getFirstName(),
+                            newEmployee.getLastName(), newEmployee.getGender(), newEmployee.getHireDate())
+                    .anyMatch(Objects::isNull)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "The employee cannot be null");
+            }
             empDao.save(newEmployee);
-            return new ResponseEntity<>(newEmployee.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(newEmployee.toString(), headers, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("\"message\":\"User could not be added\"}",
                     HttpStatus.UNAUTHORIZED);

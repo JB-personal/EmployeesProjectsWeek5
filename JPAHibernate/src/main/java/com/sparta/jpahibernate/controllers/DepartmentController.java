@@ -31,7 +31,7 @@ public class DepartmentController {
 
 
     @GetMapping("/{id}")
-    public DepartmentDTO findDepartmentById(@PathVariable String id, @RequestParam String apiKey) {
+    public DepartmentDTO findDepartmentById(@PathVariable String id) {
         return deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "No department with the specified ID could be found"));
     }
@@ -72,12 +72,6 @@ public class DepartmentController {
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
 //                    "No department with the specified ID could be found");
 //    }
-
-    @ExceptionHandler
-    public String reportError(Throwable t) {
-        t = new Throwable("<h1>Error! You messed up.</h1>");
-        return t.getMessage();
-    }
 
     @PutMapping("/put")
     public ResponseEntity<String> updateDepartment(@RequestBody DepartmentDTO newState, @RequestParam String apiKey) {
