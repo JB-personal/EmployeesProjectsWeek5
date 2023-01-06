@@ -19,4 +19,6 @@ public interface UserDAO extends DAO<UserDTO>{
     String getKey(UserDTO dto);
 
     String getLevel(UserDTO dto);
+
+
 }

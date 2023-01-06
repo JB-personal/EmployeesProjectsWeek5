@@ -86,7 +86,7 @@ public class DepartmentController {
             // otherwise, insert it
             deptDao.save(newState);
         }
-        return revisedState;
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/count")

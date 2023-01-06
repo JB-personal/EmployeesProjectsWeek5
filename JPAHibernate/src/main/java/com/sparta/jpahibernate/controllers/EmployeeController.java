@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
+import com.sparta.jpahibernate.dao.concretes.UserDAOImpl;
 import com.sparta.jpahibernate.dto.EmployeeDTO;
 import com.sparta.jpahibernate.dto.EmpsByDeptsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,19 @@ public class EmployeeController {
     @Autowired
     private EmployeeDAOImpl empDao;
 
+    @Autowired
+    private UserDAOImpl userDao;
+
     @PostMapping("/add")
-    public ResponseEntity<EmployeeDTO> addNewEmployee(@RequestBody EmployeeDTO newEmployee){
-        empDao.save(newEmployee);
-        return new ResponseEntity<>(newEmployee, HttpStatus.OK);
+    public ResponseEntity<String> addNewEmployee(@RequestBody EmployeeDTO newEmployee, @RequestParam String apiKey){
+        if (userDao.isAdmin(apiKey) || userDao.isUpdate(apiKey)){
+            empDao.save(newEmployee);
+            return new ResponseEntity<>(newEmployee.toString(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("\"message\":\"User could not be added\"}",
+                    HttpStatus.UNAUTHORIZED);
+        }
+
     }
 
     @PutMapping("/update/create")

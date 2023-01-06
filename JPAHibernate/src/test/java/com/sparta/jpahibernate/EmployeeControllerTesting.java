@@ -50,14 +50,14 @@ public class EmployeeControllerTesting {
     @DisplayName("Delete employees by ID")
     void deleteByID(){
         empControl = new EmployeeController();
-        Optional<EmployeeDTO> optEmp = empDAO.findById(7);
+        Optional<EmployeeDTO> optEmp = empDAO.findById(10);
         System.out.println(optEmp.toString());
 
         //optEmp.ifPresent(employeeDTO -> empControl.delete(employeeDTO));
         if (optEmp.isPresent()){
-            empControl.deleteById(7);
+            empControl.deleteById(10, "12345");
         }
-        Assertions.assertFalse(empDAO.findById(7).isPresent());
+        Assertions.assertFalse(empDAO.findById(10).isPresent());
 
     }
 
