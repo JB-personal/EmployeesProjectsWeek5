@@ -112,7 +112,8 @@ public class EmployeeController {
 
     @GetMapping("/countNumberOfEmployeesLeftDepartmentByYear")
     public int countNumberOfEmployeesLeftDepartmentByYear(@RequestParam("dep") String dep,
-                                                          @RequestParam("year") String year){
+                                                          @RequestParam("year") String year,
+                                                          @RequestParam String apiKey){
 
         System.out.println( "In the year:" + year + "the number of employees left in department:" + dep );
         int res = empDao.countNumberOfEmployeesLeftDepartmentByYear(dep,year);
@@ -123,13 +124,15 @@ public class EmployeeController {
     @GetMapping("/findByDepartmentAndDate")
     public List<EmpsByDeptsDTO> findByDepartmentAndDate(@RequestParam("dep") String dep,
                                                         @RequestParam("fromDate") LocalDate fromDate,
-                                                        @RequestParam("toDate") LocalDate toDate){
+                                                        @RequestParam("toDate") LocalDate toDate,
+                                                        @RequestParam String apiKey){
 
         return empDao.findByDepartmentAndDate(dep, fromDate, toDate);
     }
 
     @GetMapping("/findByLastName")
-    public List<EmployeeDTO> findByLastName(@RequestParam("lastName") String lastName){
+    public List<EmployeeDTO> findByLastName(@RequestParam("lastName") String lastName,
+                                            @RequestParam String apiKey){
         return empDao.findByLastName(lastName);
     }
 }

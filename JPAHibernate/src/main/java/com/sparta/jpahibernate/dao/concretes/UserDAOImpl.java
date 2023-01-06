@@ -51,12 +51,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void save(UserDTO dto) {
         User user = new User();
-        user.setId(Long.valueOf(0));
         user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
         user.setKey(dto.getKey());
         user.setLastUpdate(Instant.now());
-        user.setLevel(dto.getLevel());
+        if(dto.getLevel() != null) {
+            user.setLevel(dto.getLevel());
+        }
         userRepo.save(user);
     }
 
@@ -107,6 +108,65 @@ public class UserDAOImpl implements UserDAO {
         }
         return null;
     }
+
+    public UserDTO findByKey(String key) {
+        Optional<User> result = userRepo.findByKey(key);
+        if(result.isPresent()) {
+            User user = result.get();
+            UserDTO userDto = new UserDTO(user.getId(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getKey(),
+                    user.getLastUpdate(),
+                    user.getLevel());
+            return userDto;
+        }
+        return null;
+    }
+
+    public Optional<UserDTO> findByEmail(String email) {
+        Optional<User> result = userRepo.findByEmail(email);
+        if(result.isPresent()) {
+            User user = result.get();
+            UserDTO userDto = new UserDTO(user.getId(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getKey(),
+                    user.getLastUpdate(),
+                    user.getLevel());
+            return Optional.of(userDto);
+        }
+        return Optional.empty();
+    }
+
+    public boolean isBasic(String apiKey) {
+        Optional<User> userOpt = userRepo.findByKey(apiKey);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return user.getLevel().equalsIgnoreCase("basic");
+        }
+        return false;
+    }
+
+    public boolean isUpdate(String apiKey) {
+        Optional<User> userOpt = userRepo.findByKey(apiKey);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return user.getLevel().equalsIgnoreCase("update");
+        }
+        return false;
+    }
+
+    public boolean isAdmin(String apiKey) {
+        Optional<User> userOpt = userRepo.findByKey(apiKey);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return user.getLevel().equalsIgnoreCase("admin");
+        }
+        return false;
+    }
+
+
 
     @Override
     public String getEmail(UserDTO dto) {
