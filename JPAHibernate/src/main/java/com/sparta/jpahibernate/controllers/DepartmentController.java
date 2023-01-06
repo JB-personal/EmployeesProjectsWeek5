@@ -38,10 +38,13 @@ public class DepartmentController {
 
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable String id){
-        deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "No department with the specific ID could be found"));
-        deptDao.deleteById(id);
+    public void deleteById(@PathVariable String id, @RequestParam String apiKey){
+        if (userDao.isAdmin(apiKey)) {
+            deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No department with the specific ID could be found"));
+            deptDao.deleteById(id);
+        }
+
     }
 
 //    @DeleteMapping("/{id}")

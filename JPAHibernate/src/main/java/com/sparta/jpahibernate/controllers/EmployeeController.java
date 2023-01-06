@@ -42,25 +42,30 @@ public class EmployeeController {
     }
 
     @PutMapping("/update/create")
-    public ResponseEntity<EmployeeDTO> updateEmployeePut(@RequestBody EmployeeDTO newState){
-        Optional<EmployeeDTO> original = empDao.findById(newState.getId());
-        if (original.isPresent()) {
-            String[] params = new String[]{newState.getId().toString(), newState.getBirthDate().toString(), newState.getFirstName(), newState.getLastName(), newState.getGender(), newState.getHireDate().toString()};
-            empDao.update(newState.getId(), params);
-            return new ResponseEntity<>(empDao.findById(newState.getId()).get(), HttpStatus.OK);
+    public ResponseEntity<EmployeeDTO> updateEmployeePut(@RequestBody EmployeeDTO newState, @RequestParam String apiKey){
+        if (userDao.isAdmin(apiKey) || userDao.isUpdate(apiKey)) {
+            Optional<EmployeeDTO> original = empDao.findById(newState.getId());
+            if (original.isPresent()) {
+                String[] params = new String[]{newState.getId().toString(), newState.getBirthDate().toString(), newState.getFirstName(), newState.getLastName(), newState.getGender(), newState.getHireDate().toString()};
+                empDao.update(newState.getId(), params);
+                return new ResponseEntity<>(empDao.findById(newState.getId()).get(), HttpStatus.OK);
+            } else {
+                empDao.save(newState);
+                return new ResponseEntity<>(empDao.findById(newState.getId()).get(), HttpStatus.OK);
+            }
         }
-        else {
-            empDao.save(newState);
-            return new ResponseEntity<>(empDao.findById(newState.getId()).get(), HttpStatus.OK);
-        }
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<EmployeeDTO> updateEmployeePatch(@RequestBody EmployeeDTO newState){
-        String[] params = new String[] {newState.getId().toString(), newState.getBirthDate().toString(), newState.getFirstName(), newState.getLastName(), newState.getGender(), newState.getHireDate().toString()};
-        empDao.update(newState.getId(), params);
-        System.out.println(empDao.findById(newState.getId()).get());
-        return new ResponseEntity<>(empDao.findById(newState.getId()).get(), HttpStatus.OK);
+    public ResponseEntity<EmployeeDTO> updateEmployeePatch(@RequestBody EmployeeDTO newState, @RequestParam String apiKey){
+        if (userDao.isAdmin(apiKey) || userDao.isUpdate(apiKey)) {
+            String[] params = new String[]{newState.getId().toString(), newState.getBirthDate().toString(), newState.getFirstName(), newState.getLastName(), newState.getGender(), newState.getHireDate().toString()};
+            empDao.update(newState.getId(), params);
+            System.out.println(empDao.findById(newState.getId()).get());
+            return new ResponseEntity<>(empDao.findById(newState.getId()).get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/{id}")
@@ -91,10 +96,12 @@ public class EmployeeController {
 //    }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteById(@PathVariable int id){
-        empDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "No employee with the specific ID could be found"));
-        empDao.deleteById(id);
+    public void deleteById(@PathVariable int id, @RequestParam String apiKey){
+        if (userDao.isAdmin(apiKey)) {
+            empDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No employee with the specific ID could be found"));
+            empDao.deleteById(id);
+        }
     }
 
 //    @DeleteMapping("/{id}")
