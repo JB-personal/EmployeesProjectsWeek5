@@ -31,7 +31,7 @@ public class DepartmentController {
 
 
     @GetMapping("/{id}")
-    public DepartmentDTO findDepartmentById(@PathVariable String id, @RequestParam String apiKey) {
+    public DepartmentDTO findDepartmentById(@PathVariable String id) {
         return deptDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "No department with the specified ID could be found"));
     }
