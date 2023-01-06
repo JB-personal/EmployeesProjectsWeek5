@@ -40,7 +40,8 @@ public class DeptControllerTesting {
         HttpResponse response = client.execute(get);
         get.setHeader("Accept", "application/json");
         get.setHeader("Content-type", "application/json");
-
+        System.out.println(response);
+        System.out.println(response.getEntity().getContent());
         Assertions.assertEquals((HttpStatus.SC_INTERNAL_SERVER_ERROR), response.getStatusLine().getStatusCode());
     }
 
