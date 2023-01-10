@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User Success Page</title>
+    <style>
+        body {
+            background-image: url('https://i.kym-cdn.com/entries/icons/facebook/000/018/929/graphic_design_is_my_passion.jpg');
+        }
+    </style>
+</head>
+
+<body>
+<p><h1>User created:</h1></p>
+<span th:unless="${user==null}">
+    <h2>
+        <br>Id: <span th:text="${user.id}"></span>
+        <br>Email: <span th:text="${user.email}"></span>
+        <br>Level: <span th:text="${user.level}"></span>
+    </h2>
+</span>
+
+</body>
+</html>

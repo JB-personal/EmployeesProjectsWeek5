@@ -27,7 +27,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.0.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>3.0.1</version>
+        </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -35,9 +39,9 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-DateHolder</artifactId>
             <version>3.0.0</version>
-            <scope>test</scope>
+            <scope>DateHolder</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
