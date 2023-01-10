@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete User Success Page</title>
+</head>
+<style>
+    table{
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width:100%;
+    }
+    td, th{
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    tr:nth-child(even){
+        background-color: #dddddd;
+    }
+</style>
+<body>
+<style>
+    body {
+        background-image: url('https://i.kym-cdn.com/entries/icons/facebook/000/018/929/graphic_design_is_my_passion.jpg');
+    }
+</style>
+<span th:if="${user==null}">
+<h2>
+    <br> User with details:
+    <br>ID: <span th:text="${user.id}"></span>
+    <br>Email: <span th:text="${user.email}"></span>
+    <br>Password: <span th:text="${user.password}"></span>
+    <br> was successfully deleted!
+</h2>
+</span>
+
+</body>
+</html>

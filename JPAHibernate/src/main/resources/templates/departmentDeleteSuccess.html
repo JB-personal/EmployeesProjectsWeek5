@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Department Success Page</title>
+</head>
+<style>
+  table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width:100%;
+  }
+  td, th{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even){
+    background-color: #dddddd;
+  }
+</style>
+<body>
+  <span th:if="${department==null}">
+    Department(<span th:text="${department.id}"></span>): <span th:text="${department.deptName}"> was deleted</span>
+  </span>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Department Success Page</title>
+</head>
+<body>
+    <span th:unless="${department==null}">
+      Department: <span th:text="${department.deptName}"></span> with ID: <span th:text="${department.id}"></span> was updated successfully</span>
+    <span th:if="${department==null}">
+      Could not update the Department with ID: <span th:text="${department.id}"></span>
+    </span>
+</body>
+</html>

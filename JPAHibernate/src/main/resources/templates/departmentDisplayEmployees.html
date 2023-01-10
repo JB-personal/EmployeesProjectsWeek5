@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Employees For Department</title>
+</head>
+<body>
+    <form th:action="@{/web/department/test}" th:object="${dateHolder}" method="POST">
+        <label for="fromDate">From Date: </label>
+        <input type="date" id="fromDate" name="fromDate" th:field="*{fromDate}"><br><br>
+        <label for="toDate">To Date: </label>
+        <input type="date" id="toDate" name="toDate" th:field="*{toDate}"><br><br>
+        <input type="submit" value="submit">
+    </form>
+</body>
+</html>
