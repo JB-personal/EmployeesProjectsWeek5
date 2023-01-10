@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/web/department")
@@ -21,6 +20,13 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public String findDeptById(@PathVariable("id") String id, Model model) {
         DepartmentDTO department = departmentDAO.findById(id).orElse(null);
+        model.addAttribute("department", department);
+        return "departmentDisplay";
+    }
+
+    @GetMapping("/name/{deptName}")
+    public String findDeptByTitle(@PathVariable String deptName, Model model){
+        DepartmentDTO department = departmentDAO.findDepartmentByDeptName(deptName);
         model.addAttribute("department", department);
         return "departmentDisplay";
     }
