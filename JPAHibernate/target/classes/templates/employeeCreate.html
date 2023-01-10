@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Employee</title>
+</head>
+<body>
+<style>
+    body {
+        background-image: url('https://i.kym-cdn.com/entries/icons/facebook/000/018/929/graphic_design_is_my_passion.jpg');
+    }
+</style>
+<form th:action="@{/web/employee/new/success}" th:object="${employee}" method="POST">
+    <label for="id">Employee no. </label>
+    <input type="text" id="id" name="id" th:field="*{id}">
+    <br/><br/>
+    <label for="birthDate">Birth Date </label>
+    <input type="text" id="birthDate" name="birthDate" th:field="*{birthDate}">
+    <br/><br/>
+    <label for="firstName">First Name </label>
+    <input type="text" id="firstName" name="firstName" th:field="*{firstName}">
+    <br/><br/>
+    <label for="lastName">Last Name </label>
+    <input type="text" id="lastName" name="lastName" th:field="*{lastName}">
+    <br/><br/>
+    <label for="gender">Gender </label>
+    <input type="text" id="gender" name="gender" th:field="*{gender}">
+    <br/><br/>
+    <label for="hireDate">Hire Date </label>
+    <input type="text" id="hireDate" name="hireDate" th:field="*{hireDate}">
+    <br/><br/>
+
+    <input type="submit" value="Create Employee">
+</form>
+</body>
+</html>

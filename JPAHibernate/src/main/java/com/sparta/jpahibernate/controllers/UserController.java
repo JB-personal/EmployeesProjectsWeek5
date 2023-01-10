@@ -30,5 +30,54 @@ public class UserController {
         return "userDisplay";
     }
 
+    @GetMapping("/new")
+    public String createUser(Model model){
+        UserDTO user = new UserDTO();
+        model.addAttribute("user", user);
+        return "userCreate";
+    }
+
+    @PostMapping("/new/success")
+    public String createUserSuccess(@ModelAttribute("user") UserDTO user, Model model){
+        user.setLastUpdate(Instant.now());
+        userDAO.save(user);
+        model.addAttribute("user", user);
+        return "userCreateSuccess";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") long id, Model model){
+        UserDTO user = userDAO.findById(id).orElse(null);
+        model.addAttribute("user", user);
+        return "userUpdate";
+    }
+
+    @PostMapping("/update/success")
+    public String updateUserSuccess(@ModelAttribute("user")UserDTO user, Model model){
+        userDAO.save(user);
+        model.addAttribute("user", user);
+        return "userUpdateSuccess";
+    }
+
+    @GetMapping("/all")
+    public String getAllUsers(Model model){
+        List<UserDTO> users = userDAO.findAll();
+        model.addAttribute("users", users);
+        return "userDisplayAll";
+    }
+
+    @GetMapping("/delete")
+    public String deleteUser(Model model){
+        model.addAttribute("user", new UserDTO() );
+        return "userDelete";
+    }
+
+    @GetMapping("/delete/success")
+    public String deleteUserSuccess(@ModelAttribute("user") UserDTO user, Model model) {
+        user = userDAO.findById(user.getId()).get();
+        userDAO.delete(user);
+        model.addAttribute("user", user);
+        return "userDeleteSuccess";
+    }
 
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Department Success Page</title>
+</head>
+<style>
+  table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width:100%;
+  }
+  td, th{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  tr:nth-child(even){
+    background-color: #dddddd;
+  }
+</style>
+<body>
+<span th:unless="${department==null}">
+  Department: <span th:text="${department.deptName}"></span> with ID: <span th:text="${department.id}"></span> was created</span>
+<span th:if="${department==null}">
+  Could not create department with id: <span th:text="${department.id}"></span>
+</span>
+</body>
+</html>
