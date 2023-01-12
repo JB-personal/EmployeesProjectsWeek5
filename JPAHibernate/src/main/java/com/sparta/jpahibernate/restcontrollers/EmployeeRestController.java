@@ -79,7 +79,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/{id}")
-    public EmployeeDTO findDepartmentById(@PathVariable int id) {
+    public EmployeeDTO findEmployeeById(@PathVariable int id) {
         return empDao.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "No employee with the specified ID could be found"));
     }

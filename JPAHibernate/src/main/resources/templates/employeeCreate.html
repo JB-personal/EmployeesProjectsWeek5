@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Employee</title>
+    <link rel="stylesheet" href="employeeCreateCSS.css">
 </head>
 <body>
-<style>
-    body {
-        background-image: url('https://i.kym-cdn.com/entries/icons/facebook/000/018/929/graphic_design_is_my_passion.jpg');
-    }
-</style>
 <form th:action="@{/web/employee/new/success}" th:object="${employee}" method="POST">
     <label for="id">Employee no. </label>
     <input type="text" id="id" name="id" th:field="*{id}">
@@ -32,5 +28,10 @@
 
     <input type="submit" value="Create Employee">
 </form>
+
+<br>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
 </body>
 </html>

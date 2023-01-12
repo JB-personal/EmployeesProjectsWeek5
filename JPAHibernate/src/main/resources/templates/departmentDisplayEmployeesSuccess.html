@@ -2,23 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="GenericCSS.css">
     <title>Display Employees By Department Success Page</title>
 </head>
-<style>
-    table{
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width:100%;
-    }
-    td, th{
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    tr:nth-child(even){
-        background-color: #dddddd;
-    }
-</style>
 <body>
     <table>
         <thead>
@@ -32,5 +18,8 @@
                 <td th:text="${emp.employees}"></td>
             </tr>
     </table>
+    <div>
+        <a th:href="@{/web/user/index}">Home</a>
+    </div>
 </body>
 </html>

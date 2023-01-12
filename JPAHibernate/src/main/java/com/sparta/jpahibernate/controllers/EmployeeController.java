@@ -1,10 +1,7 @@
 package com.sparta.jpahibernate.controllers;
 
-import com.sparta.jpahibernate.dao.concretes.DepartmentDAOImpl;
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
-import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.EmployeeDTO;
-import com.sparta.jpahibernate.repositories.EmployeeRepository;
+import com.sparta.jpahibernate.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +16,18 @@ public class EmployeeController {
     @Autowired
     private EmployeeDAOImpl employeeDAO;
 
-    @GetMapping("/{id}")
-    public String getEmployee(@PathVariable("id") int id, Model model) {
-        EmployeeDTO employee = employeeDAO.findById(id).orElse(null);
+    @GetMapping("/search")
+    public String findEmpById(Model model) {
+        EmployeeDTO employee = new EmployeeDTO();
         model.addAttribute("employee", employee);
         return "employeeDisplay";
+    }
+
+    @PostMapping("/search/success")
+    public String findEmpByIdSuccess(@ModelAttribute("employee") EmployeeDTO employee, Model model) {
+        employee = employeeDAO.findById(employee.getId()).orElse(null);
+        model.addAttribute("employee", employee);
+        return "employeeDisplaySuccess";
     }
 
     @GetMapping("/all")
@@ -64,18 +68,51 @@ public class EmployeeController {
         return "employeeDeleteSuccess";
     }
 
-    @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable("id") int id, Model model) {
-        EmployeeDTO employee = employeeDAO.findById(id)
-                .orElse(null);
+    @GetMapping("/update")
+    public String updateEmployee(Model model) {
+        EmployeeDTO employee = new EmployeeDTO();
         model.addAttribute("employee", employee);
         return "employeeUpdate";
     }
 
     @PostMapping("/update/success")
-    public String updateEmployee(@ModelAttribute("employee") EmployeeDTO employee, Model model) {
+    public String updateEmployeeSuccess(@ModelAttribute("employee") EmployeeDTO employee, Model model) {
+        employee = employeeDAO.findById(employee.getId())
+                .orElse(null);
         employeeDAO.save(employee);
         model.addAttribute("employee", employee);
         return "employeeUpdateSuccess";
+    }
+
+    @GetMapping("/countbydepartment")
+    public String countNumberOfEmployeesLeftDepartmentByYear(Model model){
+        String dept = "";
+        String year = "";
+        model.addAttribute("dept", dept);
+        model.addAttribute("year", year);
+        return "employeeCountByDepartment";
+    }
+
+    @PostMapping("/countbydepartment/success")
+    public String countNumberOfEmployeesLeftDepartmentByYearSuccess(@ModelAttribute("dept")String dept, @ModelAttribute("year")String year, Model model){
+        int result = employeeDAO.countNumberOfEmployeesLeftDepartmentByYear(dept,
+                year);
+        model.addAttribute("result", result);
+        return "employeeCountByDepartmentSuccess";
+    }
+
+
+    @GetMapping("/searchbylastname")
+    public String findByLastName(Model model){
+        EmployeeDTO employee = new EmployeeDTO();
+        model.addAttribute("employee", employee);
+        return "employeeDisplayByLastName";
+    }
+
+    @PostMapping("/searchbylastname/success")
+    public String findByLastNameSuccess(@ModelAttribute("lastName")String lastName, Model model) {
+        List<EmployeeDTO> employees = employeeDAO.findByLastName(lastName);
+        model.addAttribute("employees", employees);
+        return "employeeDisplayByLastNameSuccess";
     }
 }

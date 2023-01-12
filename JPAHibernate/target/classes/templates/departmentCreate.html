@@ -3,29 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Create Department</title>
+  <link rel="stylesheet" href="GenericCSS.css">
 </head>
-<style>
-  table{
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width:100%;
-  }
-  td, th{
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  tr:nth-child(even){
-    background-color: #dddddd;
-  }
-</style>
 <body>
-<form th:action="@{/web/department/new/success}" th:object="${department}" method="POST">
-  <label for="id">ID</label>
-  <input type="text" id="id" name="id" th:field="*{id}"><br><br>
-  <label for="deptName">Name</label>
-  <input type="text" id="deptName" name="deptName" th:field="*{deptName}">
-  <input type="submit" value="Create">
-</form>
+  <form th:action="@{/web/department/new/success}" th:object="${department}" method="POST">
+    <label for="id">ID</label>
+    <input type="text" id="id" name="id" th:field="*{id}"><br><br>
+    <label for="deptName">Name</label>
+    <input type="text" id="deptName" name="deptName" th:field="*{deptName}">
+    <input type="submit" value="Create">
+  </form>
+  <br>
+  <div>
+    <a th:href="@{/web/user/index}">Home</a>
+  </div>
 </body>
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<span th:if="${department==null}">Could not find the department</span>
+<span th:unless="${department==null}">
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Department</th>
+    </tr>
+  </thead>
+    <tr>
+      <td th:text="${department.id}"></td>
+      <td th:text="${department.deptName}"></td>
+    </tr>
+</table>
+</span>
+<br>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
+</body>
+</html>

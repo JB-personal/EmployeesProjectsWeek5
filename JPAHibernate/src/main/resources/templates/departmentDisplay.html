@@ -2,38 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Display Department</title>
+  <link rel="stylesheet" href="GenericCSS.css">
+    <title>Search Department</title>
 </head>
-<style>
-    table{
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width:100%;
-    }
-    td, th{
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    tr:nth-child(even){
-        background-color: #dddddd;
-    }
-</style>
 <body>
-<span th:if="${department==null}">could not find the department</span>
-<span th:unless="${department==null}">
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Department</th>
-    </tr>
-  </thead>
-    <tr>
-      <td th:text="${department.id}"></td>
-      <td th:text="${department.deptName}"></td>
-    </tr>
-</table>
-</span>
+<form th:action="@{/web/department/search/success}" th:object="${department}" method="POST">
+  <label for="id">ID</label>
+  <input type="text" id="id" name="id" th:field="*{id}"><br><br>
+  <input type="submit" value="Find">
+</form>
+<div>
+  <a th:href="@{/web/user/index}">Home</a>
+</div>
 </body>
 </html>
