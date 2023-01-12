@@ -68,18 +68,51 @@ public class EmployeeController {
         return "employeeDeleteSuccess";
     }
 
-    @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable("id") int id, Model model) {
-        EmployeeDTO employee = employeeDAO.findById(id)
-                .orElse(null);
+    @GetMapping("/update")
+    public String updateEmployee(Model model) {
+        EmployeeDTO employee = new EmployeeDTO();
         model.addAttribute("employee", employee);
         return "employeeUpdate";
     }
 
     @PostMapping("/update/success")
-    public String updateEmployee(@ModelAttribute("employee") EmployeeDTO employee, Model model) {
+    public String updateEmployeeSuccess(@ModelAttribute("employee") EmployeeDTO employee, Model model) {
+        employee = employeeDAO.findById(employee.getId())
+                .orElse(null);
         employeeDAO.save(employee);
         model.addAttribute("employee", employee);
         return "employeeUpdateSuccess";
+    }
+
+    @GetMapping("/countbydepartment")
+    public String countNumberOfEmployeesLeftDepartmentByYear(Model model){
+        String dept = "";
+        String year = "";
+        model.addAttribute("dept", dept);
+        model.addAttribute("year", year);
+        return "employeeCountByDepartment";
+    }
+
+    @PostMapping("/countbydepartment/success")
+    public String countNumberOfEmployeesLeftDepartmentByYearSuccess(@ModelAttribute("dept")String dept, @ModelAttribute("year")String year, Model model){
+        int result = employeeDAO.countNumberOfEmployeesLeftDepartmentByYear(dept,
+                year);
+        model.addAttribute("result", result);
+        return "employeeCountByDepartmentSuccess";
+    }
+
+
+    @GetMapping("/searchbylastname")
+    public String findByLastName(Model model){
+        EmployeeDTO employee = new EmployeeDTO();
+        model.addAttribute("employee", employee);
+        return "employeeDisplayByLastName";
+    }
+
+    @PostMapping("/searchbylastname/success")
+    public String findByLastNameSuccess(@ModelAttribute("lastName")String lastName, Model model) {
+        List<EmployeeDTO> employees = employeeDAO.findByLastName(lastName);
+        model.addAttribute("employees", employees);
+        return "employeeDisplayByLastNameSuccess";
     }
 }

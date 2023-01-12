@@ -25,7 +25,10 @@
         background-image: url('https://i.kym-cdn.com/entries/icons/facebook/000/018/929/graphic_design_is_my_passion.jpg');
     }
 </style>
-<span th:if="${user==null}">
+<h1><span th:if="${user==null}">
+    User does not exist in the database.
+</span></h1>
+<span th:unless="${user==null}">
 <h2>
     <br> User with details:
     <br>ID: <span th:text="${user.id}"></span>
