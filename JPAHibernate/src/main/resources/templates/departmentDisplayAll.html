@@ -28,8 +28,8 @@
       </tr>
     </thead>
       <tr th:each="empForDept: ${departments}">
-        <td th:text="${department.id}"></td>
-        <td th:text="${department.deptName}"></td>
+        <td th:text="${empForDept.id}"></td>
+        <td th:text="${empForDept.deptName}"></td>
       </tr>
   </table>
   <br>

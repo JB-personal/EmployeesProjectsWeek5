@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/web/user")
+@SessionAttributes({"/login", "/index", "/loginSuccess"})
 public class UserController {
 
     @Autowired

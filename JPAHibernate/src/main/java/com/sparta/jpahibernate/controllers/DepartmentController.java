@@ -25,6 +25,13 @@ public class DepartmentController {
         return "departmentDisplay";
     }
 
+    @PostMapping("search/success")
+    public String findDeptByIdSuccess(@ModelAttribute("department") DepartmentDTO department, Model model) {
+        department = departmentDAO.findById(department.getId()).get();
+        departmentDAO.findById(department.getId());
+        model.addAttribute("department", department);
+        return "departmentDisplaySuccess";
+    }
     @GetMapping("/name/{deptName}")
     public String findDeptByTitle(@PathVariable String deptName, Model model){
         DepartmentDTO department = departmentDAO.findDepartmentByDeptName(deptName);
@@ -53,10 +60,9 @@ public class DepartmentController {
         return "departmentCreateSuccess";
     }
 
-    @GetMapping("/update/{id}")
-    public String updateDepartment(@PathVariable("id") String id, Model model) {
-        DepartmentDTO department = departmentDAO.findById(id)
-                .orElse(null);
+    @GetMapping("/update")
+    public String updateDepartment(Model model) {
+        DepartmentDTO department = new DepartmentDTO();
         model.addAttribute("department", department);
         return "departmentUpdate";
     }

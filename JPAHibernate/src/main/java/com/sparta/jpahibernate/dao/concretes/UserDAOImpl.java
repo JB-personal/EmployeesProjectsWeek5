@@ -101,12 +101,18 @@ public class UserDAOImpl implements UserDAO {
     }
     @Override
     public Optional<UserDTO> findById(long id) {
-        Optional<User> result = userRepo.findById((long) 0);
-        if (result.isPresent()) {
+        Optional<User> result = userRepo.findById(id);
+        if(result.isPresent()) {
             User user = result.get();
-            System.out.println(user);
+            UserDTO userDto = new UserDTO(user.getId(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getKey(),
+                    user.getLastUpdate(),
+                    user.getLevel());
+            return Optional.of(userDto);
         }
-        return null;
+        return Optional.empty();
     }
 
     public UserDTO findByKey(String key) {
