@@ -1,10 +1,7 @@
 package com.sparta.jpahibernate.controllers;
 
-import com.sparta.jpahibernate.dao.concretes.DepartmentDAOImpl;
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
-import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.EmployeeDTO;
-import com.sparta.jpahibernate.repositories.EmployeeRepository;
+import com.sparta.jpahibernate.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +16,18 @@ public class EmployeeController {
     @Autowired
     private EmployeeDAOImpl employeeDAO;
 
-    @GetMapping("/{id}")
-    public String getEmployee(@PathVariable("id") int id, Model model) {
-        EmployeeDTO employee = employeeDAO.findById(id).orElse(null);
+    @GetMapping("/search")
+    public String findEmpById(Model model) {
+        EmployeeDTO employee = new EmployeeDTO();
         model.addAttribute("employee", employee);
         return "employeeDisplay";
+    }
+
+    @PostMapping("/search/success")
+    public String findEmpByIdSuccess(@ModelAttribute("employee") EmployeeDTO employee, Model model) {
+        employee = employeeDAO.findById(employee.getId()).orElse(null);
+        model.addAttribute("employee", employee);
+        return "employeeDisplaySuccess";
     }
 
     @GetMapping("/all")

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="GenericCSS.css">
+    <title>Display Employee</title>
+</head>
+<body>
+<span th:if="${employee==null}">Employee Not Found</span>
+<span th:unless="${employee==null}">
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Gender</th>
+    <th>Birth Date</th>
+    <th>Hire Date</th>
+  </tr>
+  </thead>
+  <tr>
+    <td th:text="${employee.id}"></td>
+    <td th:text="${employee.firstName}"></td>
+    <td th:text="${employee.lastName}"></td>
+    <td th:text="${employee.gender}"></td>
+    <td th:text="${employee.birthDate}"></td>
+    <td th:text="${employee.hireDate}"></td>
+  </tr>
+</table>
+  </span>
+<br>
+<div>
+  <a th:href="@{/web/user/index}">Home</a>
+</div>
+</body>
+</html>

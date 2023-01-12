@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Employees For Department</title>
+</head>
+<body>
+<form th:action="@{/web/employee/countbydepartment/success}" method="POST">
+    <label for="dept">dept: </label>
+    <input type="text" id="dept" name="dept" th:value="*{dept}"><br><br>
+    <label for="year">year: </label>
+    <input type="text" id="year" name="year" th:value="*{year}"><br><br>
+    <input type="submit" value="submit">
+</form>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
+</body>
+</html>

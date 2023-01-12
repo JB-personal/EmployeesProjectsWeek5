@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Employee Success Page</title>
+    <link rel="stylesheet" href="UpdateSuccessCSS.css">
 </head>
 <body>
-<style>
-    body {
-        background-image: url('http://www.weccamps.org/wp-content/uploads/kakashi_thumbs_up.jpg');
-    }
-</style>
 <p><h1>Employee updated:</h1></p>
 <h2>
     <br>Id: <span th:text="${employee.id}"></span>
@@ -20,4 +16,7 @@
     <br>Hire Date: <span th:text="${employee.hireDate}"></span>
 </h2>
 </body>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
 </html>

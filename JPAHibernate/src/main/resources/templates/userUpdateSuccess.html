@@ -26,6 +26,8 @@
 <span th:if="${user==null}">
     Could not update the User with ID: <span th:text="${user.id}"></span>
 </span>
-
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
 </body>
 </html>

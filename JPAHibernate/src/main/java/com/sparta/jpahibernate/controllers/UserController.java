@@ -1,16 +1,11 @@
 package com.sparta.jpahibernate.controllers;
 
 import com.sparta.jpahibernate.dao.concretes.UserDAOImpl;
-import com.sparta.jpahibernate.dao.interfaces.UserDAO;
-import com.sparta.jpahibernate.dto.DepartmentDTO;
 import com.sparta.jpahibernate.dto.UserDTO;
-import com.sparta.jpahibernate.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,6 +16,21 @@ public class UserController {
 
     @Autowired
     private UserDAOImpl userDAO;
+
+    @GetMapping("/login")
+    public String handleLogin(){
+        return "login";
+    }
+
+    @PostMapping("/loginSuccess")
+    public String loginSuccess() {
+        return "index";
+    }
+
+    @GetMapping("/index")
+    public String getIndex() {
+        return "index";
+    }
 
     // --------------------------------- basic CRUD -------------------------------------------
     @GetMapping("/{id}")
@@ -40,6 +50,8 @@ public class UserController {
     @PostMapping("/new/success")
     public String createUserSuccess(@ModelAttribute("user") UserDTO user, Model model){
         user.setLastUpdate(Instant.now());
+        UUID uuid = UUID.randomUUID();
+        user.setKey(uuid.toString());
         userDAO.save(user);
         model.addAttribute("user", user);
         return "userCreateSuccess";

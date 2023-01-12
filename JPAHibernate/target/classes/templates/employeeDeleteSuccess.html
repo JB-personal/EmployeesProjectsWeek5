@@ -2,23 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="GenericCSS.css">
     <title>Delete Employee</title>
 </head>
-<style>
-    table{
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width:100%;
-    }
-    td, th{
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    tr:nth-child(even){
-        background-color: #dddddd;
-    }
-</style>
 <body>
 <h1><span th:if="${employee==null}">
     Employee does not exist in the database.
@@ -27,5 +13,8 @@
     Employee with id <span th:text="${employee.id}"></span> deleted</span>
 </h1>
 </form>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
 </body>
 </html>

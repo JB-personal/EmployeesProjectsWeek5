@@ -2,6 +2,7 @@
 <html xmlns:th="http//www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="GenericCSS.css">
     <title>Display Actors</title>
 </head>
 <body>
@@ -19,5 +20,8 @@
         <td th:text="${employee.lastName}"></td>
     </tr>
 </table>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
 </body>
 </html>

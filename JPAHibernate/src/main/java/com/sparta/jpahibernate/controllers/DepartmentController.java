@@ -1,13 +1,13 @@
 package com.sparta.jpahibernate.controllers;
 
 import com.sparta.jpahibernate.dao.concretes.DepartmentDAOImpl;
-import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.EmpsForDeptsDTO;
+import com.sparta.jpahibernate.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -17,9 +17,10 @@ public class DepartmentController {
     @Autowired
     private DepartmentDAOImpl departmentDAO;
 
-    @GetMapping("/{id}")
-    public String findDeptById(@PathVariable("id") String id, Model model) {
-        DepartmentDTO department = departmentDAO.findById(id).orElse(null);
+
+    @GetMapping("/search")
+    public String findDeptById(Model model) {
+        DepartmentDTO department = new DepartmentDTO();
         model.addAttribute("department", department);
         return "departmentDisplay";
     }
@@ -62,6 +63,8 @@ public class DepartmentController {
 
     @PostMapping("/update/success")
     public String updateDepartmentSuccess(@ModelAttribute("department") DepartmentDTO department, Model model) {
+        department = departmentDAO.findById(department.getId())
+                .orElse(null);
         departmentDAO.save(department);
         model.addAttribute("department", department);
         return "departmentUpdateSuccess";
@@ -81,24 +84,21 @@ public class DepartmentController {
         return "departmentDeleteSuccess";
     }
 
-    @GetMapping("/findEmployeesForAllDepartments")
+    @GetMapping("/findemployeesforalldepartments")
     public String findNoOfEmployeesForEachDept(Model model) {
-        DateHolder dateHolder = new DateHolder();
-        model.addAttribute("dateHolder", dateHolder);
+        LocalDate fromDate = LocalDate.now();
+        LocalDate toDate = LocalDate.now();
+        model.addAttribute("fromDate", fromDate);
+        model.addAttribute("toDate", toDate);
+
         return "departmentDisplayEmployees";
     }
 
-    @PostMapping("/test")
-    public String EmpsForEachDept(Model model, @ModelAttribute("dateHolder")DateHolder dateHolder){
-//        List<EmpsForDeptsDTO> list = departmentDAO.findNoOfEmployeesForEachDept(
-//                LocalDate.of(1995,1,1), LocalDate.of(2000,1,1));
+    @PostMapping("/findemployeesforalldepartments/success")
+    public String EmpsForEachDept(Model model, @ModelAttribute("fromDate")LocalDate fromDate, @ModelAttribute("toDate")LocalDate toDate){
         List<EmpsForDeptsDTO> list = departmentDAO.findNoOfEmployeesForEachDept(
-                dateHolder.getFromDate(), dateHolder.getToDate());
+                fromDate, toDate);
         model.addAttribute("empsForDepts", list);
         return "departmentDisplayEmployeesSuccess";
     }
-
-
-
-
 }
