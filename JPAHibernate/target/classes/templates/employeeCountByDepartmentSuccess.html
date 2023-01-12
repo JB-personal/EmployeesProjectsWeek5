@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Employee</title>
+    <title>A page</title>
 </head>
 <style>
     table{
@@ -20,15 +20,9 @@
     }
 </style>
 <body>
-<form th:action="@{/web/employee/delete/success}" th:object="${employee}" method="POST">
-    <label for="id">ID</label>
-    <input type="text" id="id" name="id" th:field="*{id}"><br><br>
-    <input type="submit" value="Delete">
-</form>
-<br>
+Employees in department: <span th:text="${result}"></span>
 <div>
     <a th:href="@{/web/user/index}">Home</a>
 </div>
 </body>
-
 </html>

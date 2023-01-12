@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/web/employee/searchbylastname/success}" th:object="${employee}" method="POST">
+    <label for="lastName">Last Name</label>
+    <input type="text" id="lastName" name="lastName" th:field="*{lastName}"><br><br>
+    <input type="submit" value="Find">
+</form>
+<div>
+    <a th:href="@{/web/user/index}">Home</a>
+</div>
+</body>
+</html>
