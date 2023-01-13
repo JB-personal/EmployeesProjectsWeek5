@@ -1,4 +1,4 @@
-package com.sparta.jpahibernate;
+package com.sparta.jpahibernate.daos;
 
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
 import com.sparta.jpahibernate.dto.EmployeeDTO;

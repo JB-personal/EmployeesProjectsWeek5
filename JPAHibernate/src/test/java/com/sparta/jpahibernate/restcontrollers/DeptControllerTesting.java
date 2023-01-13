@@ -1,4 +1,4 @@
-package com.sparta.jpahibernate;
+package com.sparta.jpahibernate.restcontrollers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;

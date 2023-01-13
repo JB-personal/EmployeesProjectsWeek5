@@ -5,12 +5,15 @@ import com.sparta.jpahibernate.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/web/employee")
+@SessionAttributes("employee")
 public class EmployeeController {
 
     @Autowired
@@ -115,4 +118,36 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         return "employeeDisplayByLastNameSuccess";
     }
+
+
+
+
+    @GetMapping ("/test")
+    public String createEmployeeTest(Model model){
+        EmployeeDTO employee = new EmployeeDTO();
+        model.addAttribute("employee", employee);
+        return "testCreate";
+    }
+
+    @PostMapping("/test/success")
+    public String createEmployeeSuccessTest(@Validated EmployeeDTO employee, BindingResult result, Model model){
+        if(result.hasErrors()){
+            return "testCreate";
+        }
+        model.addAttribute("employee", employee);
+        return "testReview";
+    }
+
+    @GetMapping("/test/review")
+    public String createEmployeeReview(@ModelAttribute("employee")EmployeeDTO employee){
+        return "testReview";
+    }
+
+    @PostMapping("/test/submit")
+    public String createEmployeeSubmit(@ModelAttribute("employee")EmployeeDTO employee, Model model){
+        employeeDAO.save(employee);
+        model.addAttribute("employee", employee);
+        return "testCreateSuccess";
+    }
+    
 }
