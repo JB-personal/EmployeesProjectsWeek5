@@ -77,7 +77,7 @@ public class EmployeeDAOTesting {
     @Test
     @DisplayName("Find the pay gap in salaries between men and women")
     void getPayGapSalary(){
-        empDao.getPayGapSalary();
+        System.out.println(empDao.getPayGapSalary());
     }
 
     @Test

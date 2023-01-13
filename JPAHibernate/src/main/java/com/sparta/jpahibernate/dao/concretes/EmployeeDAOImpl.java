@@ -8,10 +8,7 @@ import com.sparta.jpahibernate.entities.Employee;
 import com.sparta.jpahibernate.repositories.EmployeeRepository;
 import com.sparta.jpahibernate.repositories.SalaryRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -103,7 +100,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public void getPayGapSalary() {
+    public String getPayGapSalary() {
         List<SalaryForTitlesDTO> maleSalary = salaryRepository.findAvgSalaryByGender("M");
         List<SalaryForTitlesDTO> femaleSalary = salaryRepository.findAvgSalaryByGender("F");
         String result;
@@ -122,8 +119,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                         String.format("%.3f", payGap)
                         + " favouring females";
             }
-            System.out.println(result);
+            return result;
         }
+        return null;
     }
 
     @Override

@@ -20,6 +20,11 @@
   }
 </style>
 <body>
+<span th:if="${departments==null or departments.isEmpty()}">
+  <h1>no departments found</h1>
+</span>
+</span>
+<span th:unless="${departments==null or departments.isEmpty()}">
   <table>
     <thead>
       <tr>
@@ -32,6 +37,7 @@
         <td th:text="${empForDept.deptName}"></td>
       </tr>
   </table>
+  </span>
   <br>
   <div>
     <a th:href="@{/web/user/index}">Home</a>

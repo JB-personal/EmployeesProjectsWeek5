@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -52,12 +53,20 @@ public class UserController {
 
     @PostMapping("/new/success")
     public String createUserSuccess(@ModelAttribute("user") UserDTO user, Model model){
-        user.setLastUpdate(Instant.now());
-        UUID uuid = UUID.randomUUID();
-        user.setKey(uuid.toString());
-        userDAO.save(user);
-        model.addAttribute("user", user);
-        return "userCreateSuccess";
+            if( userDAO.findByEmail(user.getEmail()).isPresent()
+                    || user.getEmail() == ""
+                    || user.getPassword() == ""){
+                model.addAttribute("user", null);
+                return "userCreateSuccess";
+            }
+            user.setLastUpdate(Instant.now());
+            UUID uuid = UUID.randomUUID();
+            user.setKey(uuid.toString());
+
+            userDAO.save(user);
+            user = userDAO.findByEmail(user.getEmail()).get(); //retrieve auto-generated values to user object to return
+            model.addAttribute("user", user);
+            return "userCreateSuccess";
     }
 
     @GetMapping("/update/{id}")
@@ -67,19 +76,34 @@ public class UserController {
         return "userUpdate";
     }
 
-    public String updateUser(Model model) {
-        EmployeeDTO user = new EmployeeDTO();
-        model.addAttribute("user", user);
-        return "employeeUpdate";
-    }
-
     @PostMapping("/update/success")
     public String updateUserSuccess(@ModelAttribute("user") UserDTO user, Model model) {
-        user = userDAO.findById(user.getId())
-                .orElse(null);
+
+        // check if records with given ID exists
+        if( user == null ){
+            model.addAttribute("user", null);
+            return "userUpdateSuccess";
+        }
+
+        // Check if record with given email exists
+        Optional<UserDTO> existsOpt = userDAO.findByEmail( user.getEmail() );
+        UserDTO exists = null;
+        if(existsOpt.isPresent()){
+            exists = userDAO.findByEmail( user.getEmail() ).get();
+            if( user.getEmail().equals(exists.getEmail()) ){
+                String errCode = "-1";
+                user.setEmail(errCode);
+            }
+        }
+
+        // create a new key
+        UUID uuid = UUID.randomUUID();
+        user.setKey( uuid.toString() );
+
+        //update the record
         userDAO.save(user);
         model.addAttribute("user", user);
-        return "employeeUpdateSuccess";
+        return "userUpdateSuccess";
     }
 
     @GetMapping("/all")
@@ -95,10 +119,13 @@ public class UserController {
         return "userDelete";
     }
 
-    @GetMapping("/delete/success")
+    @PostMapping("/delete/success")
     public String deleteUserSuccess(@ModelAttribute("user") UserDTO user, Model model) {
-        user = userDAO.findById(user.getId()).get();
-        userDAO.delete(user);
+        if(userDAO.findById(user.getId()).isEmpty()) {
+            user = null;
+        } else {
+            userDAO.delete(user);
+        }
         model.addAttribute("user", user);
         return "userDeleteSuccess";
     }

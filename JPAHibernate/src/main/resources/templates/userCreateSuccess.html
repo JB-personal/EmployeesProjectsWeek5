@@ -11,13 +11,17 @@
 </head>
 
 <body>
-<p><h1>User created:</h1></p>
 <span th:unless="${user==null}">
+    <p><h1>User created:</h1></p>
     <h2>
         <br>Id: <span th:text="${user.id}"></span>
         <br>Email: <span th:text="${user.email}"></span>
         <br>Level: <span th:text="${user.level}"></span>
     </h2>
+</span>
+<span th:if="${user==null}">
+    <p><h1> Either user exists or not enough information added.</h1></p>
+
 </span>
 <div>
     <a th:href="@{/web/user/index}">Home</a>

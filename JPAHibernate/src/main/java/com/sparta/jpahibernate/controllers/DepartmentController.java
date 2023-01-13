@@ -90,17 +90,16 @@ public class DepartmentController {
         return "departmentDeleteSuccess";
     }
 
-    @GetMapping("/findemployeesforalldepartments")
+    @GetMapping("/findEmployeesForAllDepartments")
     public String findNoOfEmployeesForEachDept(Model model) {
         LocalDate fromDate = LocalDate.now();
         LocalDate toDate = LocalDate.now();
         model.addAttribute("fromDate", fromDate);
         model.addAttribute("toDate", toDate);
-
         return "departmentDisplayEmployees";
     }
 
-    @PostMapping("/findemployeesforalldepartments/success")
+    @PostMapping("/findEmployeesForAllDepartments/success")
     public String EmpsForEachDept(Model model, @ModelAttribute("fromDate")LocalDate fromDate, @ModelAttribute("toDate")LocalDate toDate){
         List<EmpsForDeptsDTO> list = departmentDAO.findNoOfEmployeesForEachDept(
                 fromDate, toDate);

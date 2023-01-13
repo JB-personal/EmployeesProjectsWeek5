@@ -5,7 +5,7 @@
     <title>Display Employees For Department</title>
 </head>
 <body>
-    <form th:action="@{/web/department/test}" method="POST">
+    <form th:action="@{/web/department/findEmployeesForAllDepartments/success}" method="POST">
         <label for="fromDate">From Date: </label>
         <input type="text" id="fromDate" name="fromDate" th:value="*{fromDate}"><br><br>
         <label for="toDate">To Date: </label>

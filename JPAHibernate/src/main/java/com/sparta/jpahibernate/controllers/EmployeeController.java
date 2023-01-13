@@ -1,15 +1,17 @@
 package com.sparta.jpahibernate.controllers;
 
+import com.sparta.jpahibernate.dao.concretes.DepartmentDAOImpl;
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
+import com.sparta.jpahibernate.dao.concretes.SalaryDAOImpl;
+import com.sparta.jpahibernate.dao.concretes.TitleDAOImpl;
 import com.sparta.jpahibernate.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/web/employee")
@@ -18,6 +20,16 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeDAOImpl employeeDAO;
+
+    @Autowired
+    private DepartmentDAOImpl departmentDAO;
+
+    @Autowired
+    private SalaryDAOImpl salaryDAO;
+
+    @Autowired
+    private TitleDAOImpl titleDAO;
+
 
     @GetMapping("/search")
     public String findEmpById(Model model) {
@@ -50,6 +62,7 @@ public class EmployeeController {
     @PostMapping("/new/success")
     public String createEmployeeSuccess(@ModelAttribute("employee")EmployeeDTO employee, Model model){
         employeeDAO.save(employee);
+
         model.addAttribute("employee", employee);
         return "employeeCreateSuccess";
     }
@@ -119,35 +132,37 @@ public class EmployeeController {
         return "employeeDisplayByLastNameSuccess";
     }
 
-
-
-
-    @GetMapping ("/test")
-    public String createEmployeeTest(Model model){
-        EmployeeDTO employee = new EmployeeDTO();
-        model.addAttribute("employee", employee);
-        return "testCreate";
+    @GetMapping("/findsalarygap")
+    public String findSalaryGapSuccess(Model model){
+        model.addAttribute("paygap", employeeDAO.getPayGapSalary());
+        return "displayPayGap";
     }
 
-    @PostMapping("/test/success")
-    public String createEmployeeSuccessTest(@Validated EmployeeDTO employee, BindingResult result, Model model){
-        if(result.hasErrors()){
-            return "testCreate";
-        }
+    @GetMapping ("/test/create")
+    public String createEmployeeTest(Model model){
+        EmployeeDetailsDTO employee = new EmployeeDetailsDTO();
+        model.addAttribute("employee", employee);
+        return "testReview";
+    }
+
+    @PostMapping("/test/create")
+    public String createEmployeeSuccessTest(@ModelAttribute("employee")EmployeeDetailsDTO employee, Model model){
+
         model.addAttribute("employee", employee);
         return "testReview";
     }
 
     @GetMapping("/test/review")
-    public String createEmployeeReview(@ModelAttribute("employee")EmployeeDTO employee){
+    public String createEmployeeReview(@ModelAttribute("employee")EmployeeDetailsDTO employee){
         return "testReview";
     }
 
     @PostMapping("/test/submit")
-    public String createEmployeeSubmit(@ModelAttribute("employee")EmployeeDTO employee, Model model){
-        employeeDAO.save(employee);
+    public String createEmployeeSubmit(@ModelAttribute("employee")EmployeeDetailsDTO employee, Model model){
+        employeeDAO.save(employee.getEmployeeDTO());
+        departmentDAO.save(employee.getDepartmentDTO());
+        salaryDAO.save(employee.getSalaryDTO());
         model.addAttribute("employee", employee);
         return "testCreateSuccess";
     }
-    
 }

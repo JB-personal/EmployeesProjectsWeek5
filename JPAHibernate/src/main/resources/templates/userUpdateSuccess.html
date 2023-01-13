@@ -21,8 +21,12 @@
 </style>
 <body>
 <span th:unless="${user==null}">
-    User: <span th:text="${user.id}"></span> was updated successfully!
+    <span th:if="${ user.getEmail()=='-1'}"> Email already exists, choose a new one.</span>
+    <span th:unless="${ user.getEmail()=='-1'}">
+        User: <span th:text="${user.id}"></span> was updated successfully!
+    </span>
 </span>
+
 <span th:if="${user==null}">
     Could not update the User with ID: <span th:text="${user.id}"></span>
 </span>

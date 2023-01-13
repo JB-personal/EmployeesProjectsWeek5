@@ -20,17 +20,21 @@
     }
 </style>
 <body>
-<form th:action="@{/user/update/success}" th:object="${user}" method="POST">
+<span th:if="${user==null}">
+    User does not exist.
+</span>
+<span th:unless="${user==null}">
+<form th:action="@{/web/user/update/success}" th:object="${user}" method="POST">
     <label hidden="id">ID</label>
     <input type="number" id="id" name="id" th:field="*{id}">
     <label for="email">Email</label>
     <input type="text" id="email" name="email" th:field="*{email}">
     <label for="password">Password</label>
     <input type="text" id="password" name="password" th:field="*{password}">
+    <input type="hidden" th:field="*{key}">
     <input type="submit" value="Update">
-
-
 </form>
+</span>
 <div>
     <a th:href="@{/web/user/index}">Home</a>
 </div>
