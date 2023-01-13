@@ -1,8 +1,7 @@
-package com.sparta.jpahibernate;
+package com.sparta.jpahibernate.daos;
 
 import com.sparta.jpahibernate.dao.concretes.DepartmentDAOImpl;
 import com.sparta.jpahibernate.dto.DepartmentDTO;
-import com.sparta.jpahibernate.dto.EmployeeDTO;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

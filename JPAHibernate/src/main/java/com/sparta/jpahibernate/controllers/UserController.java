@@ -1,6 +1,7 @@
 package com.sparta.jpahibernate.controllers;
 
 import com.sparta.jpahibernate.dao.concretes.UserDAOImpl;
+import com.sparta.jpahibernate.dto.EmployeeDTO;
 import com.sparta.jpahibernate.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,11 +67,19 @@ public class UserController {
         return "userUpdate";
     }
 
+    public String updateUser(Model model) {
+        EmployeeDTO user = new EmployeeDTO();
+        model.addAttribute("user", user);
+        return "employeeUpdate";
+    }
+
     @PostMapping("/update/success")
-    public String updateUserSuccess(@ModelAttribute("user")UserDTO user, Model model){
+    public String updateUserSuccess(@ModelAttribute("user") UserDTO user, Model model) {
+        user = userDAO.findById(user.getId())
+                .orElse(null);
         userDAO.save(user);
         model.addAttribute("user", user);
-        return "userUpdateSuccess";
+        return "employeeUpdateSuccess";
     }
 
     @GetMapping("/all")

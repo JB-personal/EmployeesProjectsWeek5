@@ -1,4 +1,4 @@
-package com.sparta.jpahibernate;
+package com.sparta.jpahibernate.restcontrollers;
 
 import com.sparta.jpahibernate.controllers.EmployeeController;
 import com.sparta.jpahibernate.dao.concretes.EmployeeDAOImpl;
