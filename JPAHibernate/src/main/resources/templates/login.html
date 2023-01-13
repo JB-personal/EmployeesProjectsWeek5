@@ -1,39 +1,39 @@
-<!--<!doctype html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <link rel="stylesheet" href="loginCSS.css">-->
-<!--  <title>Login</title>-->
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="loginCSS.css">
+  <title>Login</title>
 
-<!--</head>-->
-<!--<body>-->
-<!--<h1>Login</h1>-->
-<!--<div class="wrapper fadeInDown">-->
-<!--  <div id="formContent">-->
-<!--    &lt;!&ndash; Tabs Titles &ndash;&gt;-->
-<!--    &lt;!&ndash; Icon &ndash;&gt;-->
-<!--    <div class="fadeIn first">-->
-<!--      <img src="https://icons.veryicon.com/png/o/internet&#45;&#45;web/prejudice/user-128.png" id="icon" alt="User Icon" />-->
-<!--&lt;!&ndash;      <img src="user-505-512.png" id="icon" alt="User Icon" />&ndash;&gt;-->
-<!--    </div>-->
+</head>
+<body>
+<h1>Login</h1>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png" id="icon" alt="User Icon" />
+<!--      <img src="user-505-512.png" id="icon" alt="User Icon" />-->
+    </div>
 
-<!--    &lt;!&ndash; Login Form &ndash;&gt;-->
-<!--    <form th:action="@{/web/user/login}" method="POST">-->
-<!--      <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">-->
-<!--      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">-->
-<!--      <input type="submit" class="fadeIn fourth" value="Log In">-->
-<!--    </form>-->
+    <!-- Login Form -->
+    <form th:action="@{/web/user/login}" method="POST">
+      <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
 
-<!--    &lt;!&ndash; Remind Password &ndash;&gt;-->
-<!--    <div id="formFooter">-->
-<!--      <a class="underlineHover" href="#">Forgot Password?</a>-->
-<!--    </div>-->
+    <!-- Remind Password -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
 
-<!--  </div>-->
-<!--</div>-->
+  </div>
+</div>
 
-<!--</body>-->
-<!--</html>-->
+</body>
+</html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">

@@ -1,7 +1,6 @@
 package com.sparta.jpahibernate.dao.interfaces;
 
 import com.sparta.jpahibernate.dto.EmployeeDTO;
-import com.sparta.jpahibernate.dto.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +11,7 @@ public interface EmployeeDAO extends DAO<EmployeeDTO>{
 
     boolean existsById(Integer id);
 
-    void getPayGapSalary();
+    String getPayGapSalary();
 
     void update(Integer id, String[] params);
 

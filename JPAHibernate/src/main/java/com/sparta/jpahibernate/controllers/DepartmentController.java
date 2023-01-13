@@ -96,7 +96,6 @@ public class DepartmentController {
         LocalDate toDate = LocalDate.now();
         model.addAttribute("fromDate", fromDate);
         model.addAttribute("toDate", toDate);
-
         return "departmentDisplayEmployees";
     }
 
